@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
 
+const kContentColor = Color.fromARGB(0xFF, 0xA1, 0xA1, 0xA1);
+
 class RoundedTextField extends StatelessWidget {
-  const RoundedTextField({Key? key}) : super(key: key);
+  const RoundedTextField(
+      {Key? key,
+      required this.prefixIcon,
+      required this.hintText,
+      this.obscureText = false})
+      : super(key: key);
+  final IconData prefixIcon;
+  final String hintText;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) => {},
-      decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          prefixIcon: Icon(
-            Icons.person,
-            color: Color.fromARGB(0xFF, 0xA1, 0xA1, 0xA1),
-          ),
-          hintText: "Enter your email",
-          hintStyle: TextStyle(
-            color: Color.fromARGB(0xFF, 0xA1, 0xA1, 0xA1),
-          ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(24.0))),
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 5.0),
+        child: TextField(
+          onChanged: (value) => {},
+          textAlign: TextAlign.center,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              prefixIcon: Icon(
+                prefixIcon,
+                color: kContentColor,
+              ),
+              hintText: hintText,
+              hintStyle: const TextStyle(
+                color: kContentColor,
+              ),
+              border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(24.0))),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+        ));
   }
 }

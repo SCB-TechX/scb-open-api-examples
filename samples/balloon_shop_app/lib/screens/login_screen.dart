@@ -1,3 +1,4 @@
+import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:balloon_shop_app/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -12,56 +13,63 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-            Color.fromARGB(0xFF, 0x47, 0x16, 0x9F),
-            Color.fromARGB(0xFF, 0x9F, 0x0D, 0xB7)
-          ])),
+    return AppBackgroundContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Center(
+                          child: Text(
+                        "BALLOON SHOP",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 28.0,
+                            fontFamily: 'Sen',
+                            letterSpacing: 6.0),
+                        textAlign: TextAlign.center,
+                      )),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      height: 1,
+                      width: 150,
+                      decoration: BoxDecoration(color: Colors.white),
+                    ),
+                    SizedBox(height: 20.0),
+                    RoundedTextField(
+                      prefixIcon: Icons.person,
+                      hintText: "Enter your email",
+                    ),
+                    RoundedTextField(
+                      prefixIcon: Icons.lock,
+                      hintText: "Enter your password",
+                      obscureText: true,
+                    ),
+                  ],
+                ),
+              ),
               Container(
+                color: Colors.white,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 10.0),
+                height: 60.0,
                 child: Center(
                     child: Text(
-                  "BALLOON SHOP",
+                  'LOGIN',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 28.0,
                       fontFamily: 'Sen',
-                      letterSpacing: 6.0),
-                  textAlign: TextAlign.center,
+                      fontSize: 20.0,
+                      letterSpacing: 2.0,
+                      color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F)),
                 )),
-              ),
-              SizedBox(height: 10.0),
-              Container(
-                height: 1,
-                width: 150,
-                decoration: BoxDecoration(color: Colors.white),
-              ),
-              SizedBox(height: 20.0),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 28.0, vertical: 5.0),
-                child: RoundedTextField(),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 28.0, vertical: 5.0),
-                child: RoundedTextField(),
-              ),
-              Container(
-                  child: ElevatedButton(
-                child: Text('Sign In'),
-                onPressed: () => {},
-              )),
+              )
             ],
           ),
         ),
