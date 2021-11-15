@@ -1,5 +1,6 @@
 import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:balloon_shop_app/components/rounded_text_field.dart';
+import 'package:balloon_shop_app/screens/shop_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     RoundedTextField(
                       prefixIcon: Icons.lock,
-                      hintText: "Enter your password",
+                      hintText: "And your password",
                       obscureText: true,
                       onChanged: (value) => {userPassword = value},
                     ),
@@ -64,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextButton.styleFrom(padding: EdgeInsets.all(0.0)),
                 onPressed: () => {
                   print("login pressed: $userEmail, $userPassword"),
+                  Navigator.pushNamed(context, ShopScreen.route)
                 },
                 child: Container(
                   color: Colors.white,

@@ -28,11 +28,6 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                         Expanded(
                           child: Container(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
                             color: Colors.red,
                           ),
                         )
@@ -49,33 +44,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                         Expanded(
                           child: Container(
-                            color: Colors.orange,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
                             color: Colors.green,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            color: Colors.brown,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.pink,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.grey,
                           ),
                         )
                       ],
