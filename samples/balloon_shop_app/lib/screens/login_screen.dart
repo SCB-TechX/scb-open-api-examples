@@ -11,6 +11,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String? userEmail;
+  String? userPassword;
+
   @override
   Widget build(BuildContext context) {
     return AppBackgroundContainer(
@@ -46,29 +49,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     RoundedTextField(
                       prefixIcon: Icons.person,
                       hintText: "Enter your email",
+                      onChanged: (value) => {userEmail = value},
                     ),
                     RoundedTextField(
                       prefixIcon: Icons.lock,
                       hintText: "Enter your password",
                       obscureText: true,
+                      onChanged: (value) => {userPassword = value},
                     ),
                   ],
                 ),
               ),
-              Container(
-                color: Colors.white,
-                width: double.infinity,
-                margin: EdgeInsets.only(top: 10.0),
-                height: 60.0,
-                child: Center(
-                    child: Text(
-                  'LOGIN',
-                  style: TextStyle(
-                      fontFamily: 'Sen',
-                      fontSize: 20.0,
-                      letterSpacing: 2.0,
-                      color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F)),
-                )),
+              TextButton(
+                style: TextButton.styleFrom(padding: EdgeInsets.all(0.0)),
+                onPressed: () => {
+                  print("login pressed: $userEmail, $userPassword"),
+                },
+                child: Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 10.0),
+                  height: 60.0,
+                  child: Center(
+                      child: Text(
+                    'LOGIN',
+                    style: TextStyle(
+                        fontFamily: 'Sen',
+                        fontSize: 20.0,
+                        letterSpacing: 2.0,
+                        color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F)),
+                  )),
+                ),
               )
             ],
           ),

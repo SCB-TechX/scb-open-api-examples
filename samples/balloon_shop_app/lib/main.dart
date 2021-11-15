@@ -1,4 +1,5 @@
 import 'package:balloon_shop_app/screens/login_screen.dart';
+import 'package:balloon_shop_app/screens/shop_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => {runApp(const BalloonShopApp())};
@@ -17,6 +18,7 @@ class BalloonShopApp extends StatelessWidget {
       initialRoute: LoginScreen.route,
       routes: {
         LoginScreen.route: (context) => LoginScreen(),
+        ShopScreen.route: (context) => ShopScreen()
         // '/shop': (context) => ShopScreen(),
         // '/result': (context) => ResultScreen()
       },
