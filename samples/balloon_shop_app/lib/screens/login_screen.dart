@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-  static const route = "/";
+  static const route = "/login";
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     RoundedTextField(
                       prefixIcon: Icons.lock,
-                      hintText: "And your password",
+                      hintText: "And password",
                       obscureText: true,
                       onChanged: (value) => {userPassword = value},
                     ),
