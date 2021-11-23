@@ -10,15 +10,14 @@ module.exports.token = async (req, res) => {
     if (!user || !safeCompare(user.password, password)) {
         res.status(StatusCodes.UNAUTHORIZED).send({
             code: 40101,
-            developer_message: 'invalid credentials'
+            developer_message: 'invalid email or password'
         })
+    } else {
+        const payload = {
+            sub: req.body.email,
+            iat: new Date().getTime()
+        };
+        const SECRET = process.env.SECRET;
+        res.status(StatusCodes.OK).send({ access_token: jwt.encode(payload, SECRET) });
     }
-
-    const payload = {
-        sub: req.body.email,
-        iat: new Date().getTime()
-    };
-
-    const SECRET = process.env.SECRET;
-    res.send({ access_token: jwt.encode(payload, SECRET) });
 }
