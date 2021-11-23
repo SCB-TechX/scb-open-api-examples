@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 
+const RESOURCE_OWNER_ID = 'for_test'
 
 module.exports.tokenV1 = async () => {
     try {
@@ -15,12 +16,45 @@ module.exports.tokenV1 = async () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept-Language': 'EN',
-                    'resourceOwnerId': 'test',
+                    'resourceOwnerId': RESOURCE_OWNER_ID,
                     'requestUId': uuid
                 }
             })
-        console.log(response.data)
+        return response.data
     } catch (err) {
-        console.log(err.response.data)
+        return err.response.data
+    }
+}
+
+module.exports.createPaymentDeeplink = async (accessToken, user) => {
+    try {
+        const uuid = uuidv4()
+        const response = await axios.post(
+            process.env.SCB_HOST + '/v3/deeplink/transactions',
+            {
+                transactionType: 'PURCHASE',
+                transactionSubType: ['BP'],
+                sessionValidityPeriod: 600,
+                billPayment: {
+                    paymentAmount: 300.00,
+                    accountTo: process.env.SCB_BILLER_ID,
+                    ref1: 'ref1',
+                    ref2: 'ref2',
+                    ref3: process.env.SCB_BILLER_REF3_PREFIX + user.id
+                }
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Accept-Language': 'EN',
+                    'resourceOwnerId': RESOURCE_OWNER_ID,
+                    'requestUId': uuid,
+                    'channel': 'scbeasy'
+                }
+            })
+        return response.data
+    } catch (err) {
+        return err.response.data
     }
 }

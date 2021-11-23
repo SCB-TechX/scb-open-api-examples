@@ -2,9 +2,40 @@ const NodeCache = require("node-cache");
 const cache = new NodeCache();
 
 const scbApi = require('../apis/scb-api')
+const SCB_TOKEN_KEY = 'scb-token';
 
+module.exports.createDeeplink = async (user) => {
+    try {
+        let scbToken = cache.get(SCB_TOKEN_KEY)
+        if (!scbToken
+            || !scbToken.accessToken
+            || !scbToken.expireDate
+            || scbToken.expireDate < Date.now()) {
 
+            let tokenResponse = await scbApi.tokenV1()
+            let tokenResponseData = tokenResponse.data
+            if (!tokenResponseData
+                || !tokenResponseData.accessToken
+                || !tokenResponseData.expiresAt) {
+                throw tokenResponseData;
+            }
+            scbToken = {
+                ...tokenResponseData,
+                expireDate: new Date(tokenResponseData.expiresAt * 1000)
+            }
+            console.log('scbToken', scbToken)
+            cache.set(SCB_TOKEN_KEY, scbToken)
+        }
 
-module.exports.getDeeplink = () => {
-    scbApi.tokenV1()
+        let deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, user)
+        let deeplinkResponseData = deeplinkResponse.data
+        console.log(deeplinkResponseData)
+        if (!deeplinkResponseData.deeplinkUrl) {
+            throw deeplinkResponseData;
+        }
+        return deeplinkResponseData;
+
+    } catch (err) {
+
+    }
 }
