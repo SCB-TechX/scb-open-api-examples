@@ -17,7 +17,7 @@ module.exports.token = async (req, res) => {
             sub: req.body.email,
             iat: new Date().getTime()
         };
-        const SECRET = process.env.SECRET;
-        res.status(StatusCodes.OK).send({ access_token: jwt.encode(payload, SECRET) });
+        const secret = process.env.JWT_SECRET;
+        res.status(StatusCodes.OK).send({ access_token: jwt.encode(payload, secret) });
     }
 }
