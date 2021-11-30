@@ -15,6 +15,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String? userEmail;
   String? userPassword;
 
+  void _onLoginClick() async {
+    print("login pressed: $userEmail, $userPassword");
+    // http.Response response = await http.post(
+    //     Uri.https('balloon-shop-backend.herokuapp.com', '/token'), {}, {});
+    Navigator.pushNamed(context, ShopScreen.route);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBackgroundContainer(
@@ -63,10 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 style: TextButton.styleFrom(padding: EdgeInsets.all(0.0)),
-                onPressed: () => {
-                  print("login pressed: $userEmail, $userPassword"),
-                  Navigator.pushNamed(context, ShopScreen.route)
-                },
+                onPressed: _onLoginClick,
                 child: Container(
                   color: Colors.white,
                   width: double.infinity,

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:balloon_shop_app/screens/login_screen.dart';
+import 'package:balloon_shop_app/screens/result_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_links/uni_links.dart';
@@ -38,6 +40,7 @@ class _MainScreenState extends State<MainScreen>
         setState(() {
           _latestUri = uri;
           _err = null;
+          Navigator.pushNamed(context, ResultScreen.route);
         });
       }, onError: (Object err) {
         if (!mounted) return;
@@ -56,6 +59,6 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return LoginScreen();
   }
 }

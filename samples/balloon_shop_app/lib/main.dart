@@ -21,7 +21,7 @@ class _BalloonShopAppState extends State<BalloonShopApp> {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      initialRoute: MainScreen.route,
+      initialRoute: LoginScreen.route,
       routes: {
         MainScreen.route: (context) => MainScreen(),
         LoginScreen.route: (context) => LoginScreen(),

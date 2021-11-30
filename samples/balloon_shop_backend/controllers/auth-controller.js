@@ -13,9 +13,11 @@ module.exports.token = async (req, res) => {
             developer_message: 'invalid email or password'
         })
     } else {
+        const iatDate = new Date();
         const payload = {
             sub: req.body.email,
-            iat: new Date().getTime()
+            iat: iatDate.getTime(),
+            exp: iatDate.getTime() + (15 * 60000)
         };
         const secret = process.env.JWT_SECRET;
         res.status(StatusCodes.OK).send({ access_token: jwt.encode(payload, secret) });

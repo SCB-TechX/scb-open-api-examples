@@ -26,7 +26,7 @@ module.exports.tokenV1 = async () => {
     }
 }
 
-module.exports.createPaymentDeeplink = async (accessToken, user) => {
+module.exports.createPaymentDeeplink = async (accessToken, req) => {
     try {
         const uuid = uuidv4()
         const response = await axios.post(
@@ -36,11 +36,17 @@ module.exports.createPaymentDeeplink = async (accessToken, user) => {
                 transactionSubType: ['BP'],
                 sessionValidityPeriod: 600,
                 billPayment: {
-                    paymentAmount: 300.00,
+                    paymentAmount: req.amount,
                     accountTo: process.env.SCB_BILLER_ID,
                     ref1: 'ref1',
                     ref2: 'ref2',
-                    ref3: process.env.SCB_BILLER_REF3_PREFIX + user.id
+                    ref3: process.env.SCB_BILLER_REF3_PREFIX + req.user.id
+                },
+                merchantMetaData: {
+                    callbackUrl: 'io.scbtechx.balloonShop://result',
+                    merchantInfo: {
+                        name: 'Balloon Shop'
+                    }
                 }
             },
             {
