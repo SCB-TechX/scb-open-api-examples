@@ -19,7 +19,7 @@ module.exports.token = async (req, res) => {
             iat: iatDate.getTime(),
             exp: iatDate.getTime() + (15 * 60000)
         };
-        const secret = process.env.JWT_SECRET;
+        const secret = process.env.SERVER_JWT_SECRET;
         const token = jwt.sign(payload, secret);
         res.status(StatusCodes.OK).send({ access_token: token });
     }

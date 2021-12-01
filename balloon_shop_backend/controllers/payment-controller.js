@@ -9,5 +9,6 @@ module.exports.createDeeplink = async (req, res) => {
 }
 
 module.exports.paymentConfirmation = async (req, res) => {
+    console.log(req.body)
     res.status(StatusCodes.OK)
 }

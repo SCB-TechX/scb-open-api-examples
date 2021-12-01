@@ -5,7 +5,7 @@ const userService = require('../services/user-service')
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: process.env.SERVER_JWT_SECRET,
     ignoreExpiration: false
 }
 

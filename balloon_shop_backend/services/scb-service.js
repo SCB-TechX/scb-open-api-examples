@@ -27,7 +27,7 @@ module.exports.createDeeplink = async (user, body) => {
             console.log('scbToken', scbToken)
             cache.set(SCB_TOKEN_KEY, scbToken)
         }
-
+        console.log(scbToken)
         let deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, {
             user: user,
             amount: amount,
@@ -41,6 +41,6 @@ module.exports.createDeeplink = async (user, body) => {
         return deeplinkResponseData;
 
     } catch (err) {
-
+        console.log("ERROR", err)
     }
 }

@@ -7,7 +7,7 @@ module.exports.tokenV1 = async () => {
     try {
         const uuid = uuidv4()
         const response = await axios.post(
-            process.env.SCB_HOST + '/v1/oauth/token',
+            process.env.SCB_API_ENDPOINT + '/v1/oauth/token',
             {
                 applicationKey: process.env.SCB_API_KEY,
                 applicationSecret: process.env.SCB_API_SECRET
@@ -30,7 +30,7 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
     try {
         const uuid = uuidv4()
         const response = await axios.post(
-            process.env.SCB_HOST + '/v3/deeplink/transactions',
+            process.env.SCB_API_ENDPOINT + '/v3/deeplink/transactions',
             {
                 transactionType: 'PURCHASE',
                 transactionSubType: ['BP'],
