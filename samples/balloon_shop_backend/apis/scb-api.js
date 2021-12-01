@@ -38,7 +38,7 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                 billPayment: {
                     paymentAmount: req.amount,
                     accountTo: process.env.SCB_BILLER_ID,
-                    ref1: 'ref1',
+                    ref1: req.product,
                     ref2: 'ref2',
                     ref3: process.env.SCB_BILLER_REF3_PREFIX + req.user.id
                 },

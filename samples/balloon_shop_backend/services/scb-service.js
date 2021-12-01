@@ -7,7 +7,7 @@ const SCB_TOKEN_KEY = 'scb-token';
 module.exports.createDeeplink = async (user, body) => {
     try {
         let scbToken = cache.get(SCB_TOKEN_KEY)
-        const { amount } = body
+        const { amount, product } = body
         if (!scbToken
             || !scbToken.accessToken
             || !scbToken.expireDate
@@ -30,7 +30,8 @@ module.exports.createDeeplink = async (user, body) => {
 
         let deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, {
             user: user,
-            amount: amount
+            amount: amount,
+            product: product
         })
         let deeplinkResponseData = deeplinkResponse.data
         console.log(deeplinkResponseData)

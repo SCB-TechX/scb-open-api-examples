@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes')
 const safeCompare = require('safe-compare')
-const jwt = require("jwt-simple");
+const jwt = require("jsonwebtoken");
 const userService = require('../services/user-service')
 
 module.exports.token = async (req, res) => {
@@ -20,6 +20,7 @@ module.exports.token = async (req, res) => {
             exp: iatDate.getTime() + (15 * 60000)
         };
         const secret = process.env.JWT_SECRET;
-        res.status(StatusCodes.OK).send({ access_token: jwt.encode(payload, secret) });
+        const token = jwt.sign(payload, secret);
+        res.status(StatusCodes.OK).send({ access_token: token });
     }
 }
