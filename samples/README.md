@@ -1,1 +1,0 @@
-Samples project connect with SCB Open API
