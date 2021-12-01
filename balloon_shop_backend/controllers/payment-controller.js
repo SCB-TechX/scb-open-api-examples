@@ -7,3 +7,7 @@ module.exports.createDeeplink = async (req, res) => {
             res.status(StatusCodes.OK).send(deeplink)
         })
 }
+
+module.exports.paymentConfirmation = async (req, res) => {
+    res.status(StatusCodes.OK)
+}

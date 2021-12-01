@@ -8,5 +8,6 @@ const paymentController = require('../controllers/payment-controller')
 
 router.post('/token', authController.token)
 router.post('/payment/deeplink', authJwt, paymentController.createDeeplink)
+router.post('/payment/confirmation', paymentController.paymentConfirmation)
 
 module.exports = router
