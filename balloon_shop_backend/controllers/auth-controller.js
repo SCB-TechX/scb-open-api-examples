@@ -6,7 +6,7 @@ const ApiResponseCodes = require('../constants/api-response-codes')
 
 module.exports.token = async (req, res) => {
     const { email, password } = req.body
-    const user = userService.getUser(email)
+    const user = await userService.getUserByEmail(email)
     if (!user || !safeCompare(user.password, password)) {
         throw { responseCode: ApiResponseCodes.INVALID_EMAIL_OR_PASSWORD }
     } else {

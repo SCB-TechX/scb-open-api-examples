@@ -41,7 +41,7 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                     accountTo: process.env.SCB_BILLER_ID,
                     ref1: req.product,
                     ref2: 'ref2',
-                    ref3: process.env.SCB_BILLER_REF3_PREFIX + req.user.id
+                    ref3: process.env.SCB_BILLER_REF3_PREFIX
                 },
                 merchantMetaData: {
                     callbackUrl: 'io.scbtechx.balloonShop://result',
@@ -55,13 +55,14 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + accessToken,
                     'Accept-Language': 'EN',
-                    'resourceOwnerId': RESOURCE_OWNER_ID,
+                    'resourceOwnerId': req.user._id.toString(),
                     'requestUId': uuid,
                     'channel': 'scbeasy'
                 }
             })
         return response.data;
     } catch (err) {
+        console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
     }
 }

@@ -1,6 +1,10 @@
 const safeCompare = require('safe-compare')
-const users = require('../data/users.json')
+const _db = require('../data/db')
 
-module.exports.getUser = (email) => {
+module.exports.getUserByEmail = async (email) => {
+    const users = await _db.instance()
+        .collection('users')
+        .find({ email: email })
+        .toArray();
     return users.find((user) => safeCompare(user.email, email))
 }

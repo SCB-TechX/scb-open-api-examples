@@ -3,6 +3,7 @@ const cache = new NodeCache();
 const scbApi = require('../apis/scb-api')
 const SCB_TOKEN_KEY = 'scb-token';
 const ApiResponseCodes = require('../constants/api-response-codes')
+const _db = require('../data/db')
 
 module.exports.createDeeplink = async (user, body) => {
     try {
@@ -35,10 +36,33 @@ module.exports.createDeeplink = async (user, body) => {
         if (!deeplinkResponseData.deeplinkUrl) {
             throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL };
         }
+        await _db.instance()
+            .collection('transactions')
+            .insertOne({
+                transactionId: deeplinkResponseData.transactionId,
+                transactionStatus: 'PENDING',
+                userRefId: deeplinkResponseData.userRefId,
+
+            })
         return deeplinkResponseData;
 
     } catch (err) {
-        console.log(err)
         throw err;
     }
+}
+
+module.exports.paymentConfirmation = async (body) => {
+    try {
+        const { transactionId } = body
+        const transaction = await _db.instance()
+            .collection('transactions')
+            .findOneAndUpdate(
+                { transactionId: transactionId },
+                { $set: { transactionStatus: 'PAID' } }
+            )
+        return transaction.value
+    } catch (err) {
+        throw err;
+    }
+
 }

@@ -11,5 +11,10 @@ module.exports.createDeeplink = async (req, res) => {
 }
 
 module.exports.paymentConfirmation = async (req, res) => {
-    res.status(StatusCodes.OK)
+    try {
+        const transaction = await paymentService.paymentConfirmation(req.body)
+        res.status(StatusCodes.OK).send(transaction)
+    } catch (err) {
+        throw err;
+    }
 }

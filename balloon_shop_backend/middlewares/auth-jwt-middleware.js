@@ -16,11 +16,12 @@ const isTokenExpire = (payload) => {
 }
 
 const jwtStrategy = new JwtStrategy(opts, (payload, done) => {
-    const user = userService.getUser(payload.sub)
-    if (isTokenExpire(payload) || !user) {
-        throw 'token validation failed';
-    }
-    return done(null, user)
+    userService.getUserByEmail(payload.sub).then(user => {
+        if (isTokenExpire(payload) || !user) {
+            throw 'token validation failed';
+        }
+        return done(null, user)
+    })
 });
 
 const authenticateJwt = (req, res, next) => {

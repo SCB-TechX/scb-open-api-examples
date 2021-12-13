@@ -1,5 +1,8 @@
 require('dotenv').config()
 
+const _db = require('./data/db')
+_db.connect()
+
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -12,6 +15,7 @@ app.use(routes)
 
 const errorHandler = require('./middlewares/error-handler-middleware')
 app.use(errorHandler)
+
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log('application started')
