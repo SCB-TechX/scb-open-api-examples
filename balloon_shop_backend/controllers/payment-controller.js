@@ -1,11 +1,13 @@
 const { StatusCodes } = require("http-status-codes")
-const scbService = require('../services/payment-service')
+const paymentService = require('../services/payment-service')
 
 module.exports.createDeeplink = async (req, res) => {
-    scbService.createDeeplink(req.user, req.body)
-        .then((deeplink) => {
-            res.status(StatusCodes.OK).send(deeplink)
-        })
+    try {
+        const deeplink = await paymentService.createDeeplink(req.user, req.body)
+        res.status(StatusCodes.OK).send(deeplink)
+    } catch (err) {
+        throw err;
+    }
 }
 
 module.exports.paymentConfirmation = async (req, res) => {

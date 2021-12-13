@@ -2,16 +2,13 @@ const { StatusCodes } = require('http-status-codes')
 const safeCompare = require('safe-compare')
 const jwt = require("jsonwebtoken");
 const userService = require('../services/user-service')
+const ApiResponseCodes = require('../constants/api-response-codes')
 
 module.exports.token = async (req, res) => {
-
     const { email, password } = req.body
     const user = userService.getUser(email)
     if (!user || !safeCompare(user.password, password)) {
-        res.status(StatusCodes.UNAUTHORIZED).send({
-            code: 40101,
-            developer_message: 'invalid email or password'
-        })
+        throw { responseCode: ApiResponseCodes.INVALID_EMAIL_OR_PASSWORD }
     } else {
         const iatDate = new Date();
         const payload = {

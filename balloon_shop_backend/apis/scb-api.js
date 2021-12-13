@@ -1,7 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const ApiResponseCodes = require('../constants/api-response-codes')
 
-const RESOURCE_OWNER_ID = 'for_test'
+const RESOURCE_OWNER_ID = 'test_from_balloon_shop_backend'
 
 module.exports.tokenV1 = async () => {
     try {
@@ -22,7 +23,7 @@ module.exports.tokenV1 = async () => {
             })
         return response.data
     } catch (err) {
-        throw err;
+        throw { responseCode: ApiResponseCodes.REQUEST_SCB_TOKEN_FAIL }
     }
 }
 
@@ -61,6 +62,6 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
             })
         return response.data;
     } catch (err) {
-        throw err;
+        throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
     }
 }

@@ -6,8 +6,14 @@ const authenticateJwt = require('../middlewares/auth-jwt-middleware')
 const authController = require('../controllers/auth-controller')
 const paymentController = require('../controllers/payment-controller')
 
-router.post('/token', authController.token)
-router.post('/payment/deeplink', authenticateJwt, paymentController.createDeeplink)
-router.post('/payment/confirmation', paymentController.paymentConfirmation)
+const asyncWrap = fn =>
+    function asyncUtilWrap(req, res, next, ...args) {
+        const fnReturn = fn(req, res, next, ...args)
+        return Promise.resolve(fnReturn).catch(next)
+    }
+
+router.post('/token', asyncWrap(authController.token))
+router.post('/payment/deeplink', authenticateJwt, asyncWrap(paymentController.createDeeplink))
+router.post('/payment/confirmation', asyncWrap(paymentController.paymentConfirmation))
 
 module.exports = router
