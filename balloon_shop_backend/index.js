@@ -10,6 +10,9 @@ app.use(passport.initialize());
 const routes = require('./routes')
 app.use(routes)
 
+const errorHandler = require('./middlewares/error-handler-middleware')
+app.use(errorHandler)
+
 app.listen(process.env.SERVER_PORT, () => {
     console.log('application started')
 })

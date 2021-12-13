@@ -22,7 +22,7 @@ module.exports.tokenV1 = async () => {
             })
         return response.data
     } catch (err) {
-        return err.response.data
+        throw err;
     }
 }
 
@@ -59,8 +59,8 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                     'channel': 'scbeasy'
                 }
             })
-        return response.data
+        return response.data;
     } catch (err) {
-        return err.response.data
+        throw err;
     }
 }
