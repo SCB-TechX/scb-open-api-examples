@@ -14,6 +14,7 @@ const asyncWrap = fn =>
 
 router.post('/token', asyncWrap(authController.token))
 router.post('/payment/deeplink', authenticateJwt, asyncWrap(paymentController.createDeeplink))
+router.post('/payment/qr', authenticateJwt, asyncWrap(paymentController.createQr))
 router.post('/payment/confirmation', asyncWrap(paymentController.paymentConfirmation))
 
 module.exports = router

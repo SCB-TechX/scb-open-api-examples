@@ -40,7 +40,7 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                     paymentAmount: req.amount,
                     accountTo: process.env.SCB_BILLER_ID,
                     ref1: req.product,
-                    ref2: 'ref2',
+                    ref2: req.transactionRef,
                     ref3: process.env.SCB_BILLER_REF3_PREFIX
                 },
                 merchantMetaData: {
@@ -64,5 +64,39 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
     } catch (err) {
         console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
+    }
+}
+
+module.exports.createPaymentQr = async (accessToken, req) => {
+    try {
+        const uuid = uuidv4()
+        const response = await axios.post(
+            process.env.SCB_API_ENDPOINT + '/v1/payment/qrcode/create',
+            {
+                qrType: "PPCS",
+                ppType: "BILLERID",
+                ppId: process.env.SCB_BILLER_ID,
+                amount: req.amount,
+                ref1: req.product,
+                ref2: req.transactionRef,
+                ref3: process.env.SCB_BILLER_REF3_PREFIX,
+                merchantId: process.env.SCB_MERCHANT_ID,
+                terminalId: process.env.SCB_MERCHANT_TERMINAL_ID,
+                invoice: 'INVOICE',
+                csExtExpiryTime: 60
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Accept-Language': 'EN',
+                    'resourceOwnerId': req.user._id.toString(),
+                    'requestUId': uuid,
+                }
+            })
+        return response.data;
+    } catch (err) {
+        console.log(err.response.data)
+        throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_QR_FAIL }
     }
 }

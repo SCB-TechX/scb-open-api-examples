@@ -5,6 +5,7 @@ const ApiResponseCodes = Object.freeze({
     INTERNAL_SERVER_ERROR: 50001,
     REQUEST_SCB_TOKEN_FAIL: 50002,
     REQUEST_SCB_CREATE_DEEPLINK_FAIL: 50003,
+    REQUEST_SCB_CREATE_QR_FAIL: 50004,
 })
 
 module.exports = ApiResponseCodes
