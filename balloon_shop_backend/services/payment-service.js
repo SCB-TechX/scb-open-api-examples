@@ -93,12 +93,12 @@ module.exports.createDeeplink = async (user, body) => {
 module.exports.createQr = async (user, body) => {
     try {
         const scbToken = await getScbToken();
-        const { amount, product } = body
+        const { productOrders } = body
+        const totalPrice = await calculateTotalPrice(productOrders)
         const transactionRef = genarateTransactionReference()
         const qrResponse = await scbApi.createPaymentQr(scbToken.accessToken, {
             user: user,
-            amount: amount,
-            product: product,
+            amount: totalPrice,
             transactionRef: transactionRef,
         })
 
