@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+const kBalloonShopBackendEndpoint = String.fromEnvironment(
+    'BALLOON_SHOP_BACKEND_ENDPOINT',
+    defaultValue: 'balloon-shop-backend.herokuapp.com');
+
+const kUriLogin = '/token';
+const kUriGetProducts = '/products';
+const kUriCreatePaymentDeeplink = '/payment/deeplink';
+const kUriCreatePaymentQr = '/payment/qr';
+
 const kAppBackgroundColor = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

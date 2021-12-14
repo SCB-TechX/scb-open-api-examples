@@ -39,45 +39,16 @@ class _ShopScreenState extends State<ShopScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.red,
-                          ),
-                        )
-                      ],
-                    ),
+                    child: ListView(),
                   ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            color: Colors.yellow,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.green,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Container(
+                  Container(
+                    height: 150,
                     color: Colors.teal,
-                  )),
-                  Expanded(
-                      child: Container(
+                  ),
+                  Container(
+                    height: 120,
                     color: Colors.indigo,
-                  )),
+                  ),
                   TextButton(
                       style: TextButton.styleFrom(padding: EdgeInsets.all(0.0)),
                       onPressed: _onCheckoutClick,
