@@ -30,6 +30,7 @@ const getScbToken = async () => {
         }
         cache.set(SCB_TOKEN_KEY, scbToken)
     }
+    console.log('scbToken:', scbToken)
     return scbToken;
 }
 

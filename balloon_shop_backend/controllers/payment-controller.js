@@ -13,7 +13,7 @@ module.exports.createDeeplink = async (req, res) => {
 module.exports.createQr = async (req, res) => {
     try {
         const qr = await paymentService.createQr(req.user, req.body)
-        res.status(StatusCodes.OK).send(deeplink)
+        res.status(StatusCodes.OK).send(qr)
     } catch (err) {
         throw err;
     }
