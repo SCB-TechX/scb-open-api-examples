@@ -8,7 +8,7 @@ const RandomString = require("randomstring");
 const _db = require('../data/db')
 
 const SCB_TOKEN_KEY = 'scb-token';
-const COLLECTION_TRANSACTIONS = 'transactions'
+const TRANSACTIONS_COLLECTION = 'transactions'
 
 const getScbToken = async () => {
     let scbToken = cache.get(SCB_TOKEN_KEY)
@@ -29,8 +29,8 @@ const getScbToken = async () => {
             expireDate: new Date(tokenResponseData.expiresAt * 1000)
         }
         cache.set(SCB_TOKEN_KEY, scbToken)
+        console.log('scbToken:', scbToken)
     }
-    console.log('scbToken:', scbToken)
     return scbToken;
 }
 
@@ -57,7 +57,7 @@ module.exports.createDeeplink = async (user, body) => {
             throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL };
         }
         await _db.instance()
-            .collection(COLLECTION_TRANSACTIONS)
+            .collection(TRANSACTIONS_COLLECTION)
             .insertOne({
                 transactionId: deeplinkResponseData.transactionId,
                 transactionStatus: 'PENDING',
@@ -84,13 +84,16 @@ module.exports.createQr = async (user, body) => {
             product: product,
             transactionRef: transactionRef,
         })
+
+        const qrResponseData = qrResponse.data
         await _db.instance()
-            .collection(COLLECTION_TRANSACTIONS)
+            .collection(TRANSACTIONS_COLLECTION)
             .insertOne({
                 transactionStatus: 'PENDING',
                 transactionRef: transactionRef,
+                qrId: qrResponseData.qrcodeId,
+                paymentMethod: 'qr',
             })
-        const qrResponseData = qrResponse.data
         return qrResponse.data
     } catch (err) {
         throw err;
@@ -99,15 +102,21 @@ module.exports.createQr = async (user, body) => {
 
 module.exports.paymentConfirmation = async (body) => {
     try {
-        const { transactionId } = body
-        console.log('tranId', transactionId)
+        const { transactionId, qrId } = body
+        console.log('transactionId', transactionId)
         const transaction = await _db.instance()
-            .collection(COLLECTION_TRANSACTIONS)
+            .collection(TRANSACTIONS_COLLECTION)
             .findOneAndUpdate(
-                { transactionRef: transactionId },
-                { $set: { transactionStatus: 'PAID' } }
+                {
+                    $or: [
+                        { transactionId: transactionId },
+                        { qrId: qrId }
+                    ]
+                },
+                {
+                    $set: { transactionId: transactionId, transactionStatus: 'PAID' }
+                }
             )
-        console.log('tran', transaction)
         return transaction.value
     } catch (err) {
         throw err;
