@@ -3,6 +3,7 @@ const cache = new NodeCache();
 
 const ApiResponseCodes = require('../constants/api-response-codes')
 const scbApi = require('../apis/scb-api')
+const productService = require('./product-service')
 const RandomString = require("randomstring");
 
 const _db = require('../data/db')
@@ -41,15 +42,31 @@ const genarateTransactionReference = () => {
     })
 }
 
+const calculateTotalPrice = async (productOrders) => {
+    let totalPrice = 0.00
+    const products = await productService.getProducts()
+    productOrders.forEach(productOrder => {
+        const product = products.find(product => product._id.toString() === productOrder._id);
+        if (product) {
+            totalPrice = totalPrice + (product.price * productOrder.amount);
+        } else {
+            console.log('product', product)
+            throw {};
+        }
+    })
+    console.log('totalPrice', totalPrice)
+    return totalPrice;
+}
+
 module.exports.createDeeplink = async (user, body) => {
     try {
         const scbToken = await getScbToken();
-        const { amount, product } = body
+        const { productOrders } = body
+        const totalPrice = await calculateTotalPrice(productOrders)
         const transactionRef = genarateTransactionReference()
         const deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, {
             user: user,
-            amount: amount,
-            product: product,
+            amount: totalPrice,
             transactionRef: transactionRef,
         })
         let deeplinkResponseData = deeplinkResponse.data
@@ -102,21 +119,18 @@ module.exports.createQr = async (user, body) => {
 
 module.exports.paymentConfirmation = async (body) => {
     try {
-        const { transactionId, qrId } = body
-        console.log('transactionId', transactionId)
+        const { billPaymentRef1 } = body
         const transaction = await _db.instance()
             .collection(TRANSACTIONS_COLLECTION)
             .findOneAndUpdate(
                 {
-                    $or: [
-                        { transactionId: transactionId },
-                        { qrId: qrId }
-                    ]
+                    transactionRef: billPaymentRef1
                 },
                 {
-                    $set: { transactionId: transactionId, transactionStatus: 'PAID' }
+                    $set: { transactionStatus: 'PAID' }
                 }
             )
+        console.log(transaction)
         return transaction.value
     } catch (err) {
         throw err;

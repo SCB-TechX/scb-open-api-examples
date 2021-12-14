@@ -15,20 +15,29 @@ const isTokenExpire = (payload) => {
     return false;
 }
 
+const getUserByEmail = (email) => {
+    return Promise.resolve(
+        userService.getUserByEmail(email)
+            .then(user => { return user })
+    ).catch(err => { return null })
+}
+
 const jwtStrategy = new JwtStrategy(opts, (payload, done) => {
-    userService.getUserByEmail(payload.sub).then(user => {
-        if (isTokenExpire(payload) || !user) {
-            throw 'token validation failed';
-        }
+    const user = getUserByEmail(payload.sub)
+    if (isTokenExpire(payload) || !user) {
+        throw done('token validation failed');
+    } else {
         return done(null, user)
-    })
+    }
 });
 
 const authenticateJwt = (req, res, next) => {
     passport.authenticate(jwtStrategy, { session: false }, (err, user, info) => {
         if (info || err) { throw { responseCode: ApiResponseCodes.INVALID_TOKEN } }
-        req.user = user;
-        return next();
+        user.then(user => {
+            req.user = user
+            return next();
+        });
     })(req, res, next);
 }
 

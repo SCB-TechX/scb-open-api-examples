@@ -21,6 +21,7 @@ module.exports.createQr = async (req, res) => {
 
 module.exports.paymentConfirmation = async (req, res) => {
     try {
+        console.log(req.body)
         const transaction = await paymentService.paymentConfirmation(req.body)
         res.status(StatusCodes.OK).send(transaction)
     } catch (err) {

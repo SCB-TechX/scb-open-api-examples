@@ -29,6 +29,7 @@ module.exports.tokenV1 = async () => {
 
 module.exports.createPaymentDeeplink = async (accessToken, req) => {
     try {
+        console.log(req.user)
         const uuid = uuidv4()
         const response = await axios.post(
             process.env.SCB_API_ENDPOINT + '/v3/deeplink/transactions',
@@ -39,8 +40,8 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                 billPayment: {
                     paymentAmount: req.amount,
                     accountTo: process.env.SCB_BILLER_ID,
-                    ref1: req.product,
-                    ref2: req.transactionRef,
+                    ref1: req.transactionRef,
+                    ref2: 'REF2',
                     ref3: process.env.SCB_BILLER_REF3_PREFIX
                 },
                 merchantMetaData: {
@@ -62,7 +63,7 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
             })
         return response.data;
     } catch (err) {
-        console.log(err.response.data)
+        console.log(err)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
     }
 }
