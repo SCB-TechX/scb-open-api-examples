@@ -27,7 +27,7 @@ module.exports.getProducts = async () => {
         const products = await _db.instance()
             .collection(PRODUCTS_COLLECTION)
             .find({})
-            .limit(10)
+            .sort({ price: 1 })
             .toArray();
         return products;
     } catch (err) {
