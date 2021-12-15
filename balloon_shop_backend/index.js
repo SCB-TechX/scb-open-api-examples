@@ -17,6 +17,6 @@ const errorHandler = require('./middlewares/error-handler-middleware')
 app.use(errorHandler)
 
 
-app.listen(process.env.SERVER_PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log('application started')
 })
