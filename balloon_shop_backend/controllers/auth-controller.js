@@ -18,6 +18,6 @@ module.exports.token = async (req, res) => {
         };
         const secret = process.env.SERVER_JWT_SECRET;
         const token = jwt.sign(payload, secret);
-        res.status(StatusCodes.OK).send({ access_token: token });
+        res.status(StatusCodes.OK).send({ accessToken: token });
     }
 }

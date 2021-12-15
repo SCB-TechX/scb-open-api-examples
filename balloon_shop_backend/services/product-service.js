@@ -29,6 +29,9 @@ module.exports.getProducts = async () => {
             .find({})
             .sort({ price: 1 })
             .toArray();
+        products.forEach((product) => {
+            product.price = parseFloat(product.price).toFixed(2);
+        })
         return products;
     } catch (err) {
         throw err;
