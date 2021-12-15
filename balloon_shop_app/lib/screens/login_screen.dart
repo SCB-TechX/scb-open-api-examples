@@ -7,6 +7,7 @@ import 'package:balloon_shop_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,6 +20,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String? userEmail;
   String? userPassword;
+  final userEmailController = TextEditingController();
+  final userPasswordController = TextEditingController();
   bool showLoadingSpinner = false;
 
   void _onLoginClick() async {
@@ -30,17 +33,20 @@ class _LoginScreenState extends State<LoginScreen> {
         Uri.https(kBalloonShopBackendEndpoint, kUriLogin),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({'email': userEmail, 'password': userPassword}));
-    var accessToken = jsonDecode(response.body)['accessToken'];
+    String accessToken = jsonDecode(response.body)['accessToken'];
     setState(() {
       showLoadingSpinner = false;
     });
     if (accessToken != null) {
-      print(accessToken);
-      // save token
+      _saveAccessToken(accessToken);
       Navigator.pushNamed(context, ShopScreen.route);
     } else {
       _showLoginErrorDialog();
     }
+    userEmail = "";
+    userPassword = "";
+    userEmailController.clear();
+    userPasswordController.clear();
   }
 
   void _showLoginErrorDialog() {
@@ -59,6 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           );
         });
+  }
+
+  void _saveAccessToken(String accessToken) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('accessToken', accessToken);
   }
 
   @override
@@ -96,11 +107,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: 20.0),
                       RoundedTextField(
+                        controller: userEmailController,
                         prefixIcon: Icons.person,
                         hintText: "Enter your email",
                         onChanged: (value) => {userEmail = value},
                       ),
                       RoundedTextField(
+                        controller: userPasswordController,
                         prefixIcon: Icons.lock,
                         hintText: "And password",
                         obscureText: true,

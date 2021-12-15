@@ -8,11 +8,13 @@ class RoundedTextField extends StatelessWidget {
     required this.prefixIcon,
     required this.hintText,
     this.obscureText = false,
+    this.controller,
     this.onChanged,
   }) : super(key: key);
   final IconData prefixIcon;
   final String hintText;
   final bool obscureText;
+  final TextEditingController? controller;
   final void Function(String)? onChanged;
 
   @override
@@ -20,6 +22,7 @@ class RoundedTextField extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 5.0),
         child: TextField(
+          controller: controller,
           onChanged: onChanged,
           textAlign: TextAlign.center,
           obscureText: obscureText,

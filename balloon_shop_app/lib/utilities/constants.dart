@@ -9,6 +9,10 @@ const kUriGetProducts = '/products';
 const kUriCreatePaymentDeeplink = '/payment/deeplink';
 const kUriCreatePaymentQr = '/payment/qr';
 
+const kAccessTokenKey = 'accessToken';
+
+const kHeaderAuthorization = 'Authorization';
+
 const kAppBackgroundColor = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
