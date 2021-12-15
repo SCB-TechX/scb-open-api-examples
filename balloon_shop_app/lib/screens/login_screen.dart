@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-  static const route = "/login";
+  static const route = "/";
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
