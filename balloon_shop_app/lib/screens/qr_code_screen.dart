@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class QrCodeScreen extends StatefulWidget {
   const QrCodeScreen({Key? key, this.qrImage}) : super(key: key);
