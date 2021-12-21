@@ -5,18 +5,17 @@ _db.connect()
 
 const express = require('express')
 const app = express()
-const http = require('http');
-const server = http.createServer(app);
-app.use(express.json())
-
 const passport = require('passport')
-app.use(passport.initialize());
-
 const routes = require('./routes')
-app.use(routes)
-
 const errorHandler = require('./middlewares/error-handler-middleware')
+
+app.use(express.json())
+app.use(passport.initialize())
+app.use(routes)
 app.use(errorHandler)
+
+const http = require('http')
+const server = http.createServer(app)
 
 server.listen(process.env.PORT, () => {
     console.log('application started')

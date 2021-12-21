@@ -3,8 +3,8 @@ const router = express.Router()
 
 const authenticateJwt = require('../middlewares/auth-jwt-middleware')
 
-const authController = require('../controllers/auth-controller')
-const paymentController = require('../controllers/payment-controller')
+const authController = require('../controllers/auth.controller')
+const paymentController = require('../controllers/payment.controller')
 const productController = require('../controllers/product-controller')
 
 const asyncWrap = fn =>
@@ -17,6 +17,8 @@ router.post('/token', asyncWrap(authController.token))
 
 router.post('/payment/deeplink', authenticateJwt, asyncWrap(paymentController.createDeeplink))
 router.post('/payment/qr', authenticateJwt, asyncWrap(paymentController.createQr))
+router.get('/payment/qr/transaction', authenticateJwt, asyncWrap(paymentController.getTransactionByQrIdAndStatus))
+
 router.post('/payment/confirmation', asyncWrap(paymentController.paymentConfirmation))
 
 router.get('/products', authenticateJwt, asyncWrap(productController.getProducts))

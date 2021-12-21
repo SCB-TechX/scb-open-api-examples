@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-const kBalloonShopBackendEndpoint = String.fromEnvironment(
-    'BALLOON_SHOP_BACKEND_ENDPOINT',
-    defaultValue: 'balloon-shop-backend.herokuapp.com');
+const kBalloonShopBackendEndpoint =
+    String.fromEnvironment('BALLOON_SHOP_BACKEND_ENDPOINT',
+        // defaultValue: 'balloon-shop-backend.herokuapp.com');
+        defaultValue: '7efc-2405-9800-b820-9c2a-7076-a5fb-7111-78eb.ngrok.io');
 
 const kUriLogin = '/token';
 const kUriGetProducts = '/products';

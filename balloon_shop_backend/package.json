@@ -1,7 +1,7 @@
 {
   "name": "balloon_shop_backend",
   "version": "1.0.0",
-  "description": "Sample backend connected with SCB Open API",
+  "description": "Sample partner backend connected with SCB Open API",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -23,7 +23,6 @@
     "passport-jwt": "^4.0.0",
     "randomstring": "^1.2.1",
     "safe-compare": "^1.1.4",
-    "socket.io": "^4.4.0",
     "uuid": "^8.3.2"
   }
 }

@@ -17,6 +17,7 @@ dependencies:
   url_launcher: ^6.0.15
   shared_preferences: ^2.0.11
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
+  socket_io_client: ^1.0.2
 
 dev_dependencies:
   flutter_test:

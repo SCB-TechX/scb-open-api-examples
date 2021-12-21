@@ -36,7 +36,7 @@ class _ShopScreenState extends State<ShopScreen> {
     productOrders.forEach((key, value) {
       orders.add({'_id': key, 'amount': value});
     });
-    return jsonEncode({'productOrders': orders});
+    return jsonEncode({'orderedProducts': orders});
   }
 
   void _onCheckoutClick() async {

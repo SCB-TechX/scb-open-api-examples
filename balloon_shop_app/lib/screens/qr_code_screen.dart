@@ -46,6 +46,5 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
         ),
       ),
     );
-    // image:
   }
 }

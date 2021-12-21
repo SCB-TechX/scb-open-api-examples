@@ -1,14 +1,14 @@
-const NodeCache = require("node-cache");
-const cache = new NodeCache();
+const NodeCache = require("node-cache")
+const cache = new NodeCache()
 
 const ApiResponseCodes = require('../constants/api-response-codes')
 const scbApi = require('../apis/scb-api')
 const productService = require('./product-service')
-const RandomString = require("randomstring");
+const paymentUtil = require('../utilities/payment.utility')
 
 const _db = require('../data/db')
 
-const SCB_TOKEN_KEY = 'scb-token';
+const SCB_TOKEN_KEY = 'scb-token'
 const TRANSACTIONS_COLLECTION = 'transactions'
 
 const getScbToken = async () => {
@@ -23,7 +23,7 @@ const getScbToken = async () => {
         if (!tokenResponseData
             || !tokenResponseData.accessToken
             || !tokenResponseData.expiresAt) {
-            throw { responseCode: ApiResponseCodes.REQUEST_SCB_TOKEN_FAIL };
+            throw { responseCode: ApiResponseCodes.REQUEST_SCB_TOKEN_FAIL }
         }
         scbToken = {
             ...tokenResponseData,
@@ -32,38 +32,31 @@ const getScbToken = async () => {
         cache.set(SCB_TOKEN_KEY, scbToken)
         console.log('scbToken:', scbToken)
     }
-    return scbToken;
+    return scbToken
 }
 
-const genarateTransactionReference = () => {
-    return RandomString.generate({
-        length: 10,
-        charset: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    })
-}
-
-const calculateTotalPrice = async (productOrders) => {
+const calculateTotalPrice = async (orderedProducts) => {
     let totalPrice = 0.00
     const products = await productService.getProducts()
-    productOrders.forEach(productOrder => {
-        const product = products.find(product => product._id.toString() === productOrder._id);
+    orderedProducts.forEach(orderedProduct => {
+        const product = products.find(product => product._id.toString() === orderedProduct._id)
         if (product) {
-            totalPrice = totalPrice + (product.price * productOrder.amount);
+            totalPrice = totalPrice + (product.price * orderedProduct.amount)
         } else {
             console.log('product', product)
-            throw {};
+            throw {}
         }
     })
     console.log('totalPrice', totalPrice)
-    return totalPrice;
+    return totalPrice
 }
 
 module.exports.createDeeplink = async (user, body) => {
     try {
-        const scbToken = await getScbToken();
-        const { productOrders } = body
-        const totalPrice = await calculateTotalPrice(productOrders)
-        const transactionRef = genarateTransactionReference()
+        const scbToken = await getScbToken()
+        const { orderedProducts } = body
+        const totalPrice = await calculateTotalPrice(orderedProducts)
+        const transactionRef = paymentUtil.genarateTransactionReference()
         const deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, {
             user: user,
             amount: totalPrice,
@@ -71,7 +64,7 @@ module.exports.createDeeplink = async (user, body) => {
         })
         let deeplinkResponseData = deeplinkResponse.data
         if (!deeplinkResponseData.deeplinkUrl) {
-            throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL };
+            throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
         }
         await _db.instance()
             .collection(TRANSACTIONS_COLLECTION)
@@ -83,19 +76,19 @@ module.exports.createDeeplink = async (user, body) => {
                 userRefId: deeplinkResponseData.userRefId,
 
             })
-        return deeplinkResponseData;
+        return deeplinkResponseData
 
     } catch (err) {
-        throw err;
+        throw err
     }
 }
 
 module.exports.createQr = async (user, body) => {
     try {
-        const scbToken = await getScbToken();
-        const { productOrders } = body
-        const totalPrice = await calculateTotalPrice(productOrders)
-        const transactionRef = genarateTransactionReference()
+        const scbToken = await getScbToken()
+        const { orderedProducts } = body
+        const totalPrice = await calculateTotalPrice(orderedProducts)
+        const transactionRef = paymentUtil.genarateTransactionReference()
         const qrResponse = await scbApi.createPaymentQr(scbToken.accessToken, {
             user: user,
             amount: totalPrice,
@@ -113,7 +106,7 @@ module.exports.createQr = async (user, body) => {
             })
         return qrResponse.data
     } catch (err) {
-        throw err;
+        throw err
     }
 }
 
@@ -133,7 +126,7 @@ module.exports.paymentConfirmation = async (body) => {
         console.log(transaction)
         return transaction.value
     } catch (err) {
-        throw err;
+        throw err
     }
 
 }
