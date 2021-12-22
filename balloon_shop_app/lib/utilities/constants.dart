@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 const kBalloonShopBackendEndpoint =
     String.fromEnvironment('BALLOON_SHOP_BACKEND_ENDPOINT',
         // defaultValue: 'balloon-shop-backend.herokuapp.com');
-        defaultValue: '7efc-2405-9800-b820-9c2a-7076-a5fb-7111-78eb.ngrok.io');
+        defaultValue: '8558-2405-9800-b820-696-e8ae-cbc1-dd03-d29d.ngrok.io');
 
 const kUriLogin = '/token';
 const kUriGetProducts = '/products';
 const kUriCreatePaymentDeeplink = '/payment/deeplink';
 const kUriCreatePaymentQr = '/payment/qr';
+const kUriGetPaymentQrResult = '/payment/qr/result';
 
 const kAccessTokenKey = 'accessToken';
 

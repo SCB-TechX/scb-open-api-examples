@@ -69,12 +69,14 @@ class _ShopScreenState extends State<ShopScreen> {
             body: _createRequestBody());
         print(response.body);
         var qrImage = jsonDecode(response.body)['qrImage'];
+        var qrcodeId = jsonDecode(response.body)['qrcodeId'];
 
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => QrCodeScreen(
                       qrImage: qrImage,
+                      qrId: qrcodeId,
                     )));
       }
     } finally {

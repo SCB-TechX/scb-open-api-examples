@@ -25,28 +25,34 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showLoadingSpinner = false;
 
   void _onLoginClick() async {
-    setState(() {
-      showLoadingSpinner = true;
-    });
-    print("login pressed: $userEmail, $userPassword");
-    http.Response response = await http.post(
-        Uri.https(kBalloonShopBackendEndpoint, kUriLogin),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({'email': userEmail, 'password': userPassword}));
-    String accessToken = jsonDecode(response.body)['accessToken'];
-    setState(() {
-      showLoadingSpinner = false;
-    });
-    if (accessToken != null) {
-      _saveAccessToken(accessToken);
-      Navigator.pushNamed(context, ShopScreen.route);
-    } else {
+    try {
+      setState(() {
+        showLoadingSpinner = true;
+      });
+      print("login pressed: $userEmail, $userPassword");
+      http.Response response = await http.post(
+          Uri.https(kBalloonShopBackendEndpoint, kUriLogin),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({'email': userEmail, 'password': userPassword}));
+      String accessToken = jsonDecode(response.body)['accessToken'];
+
+      if (accessToken != null) {
+        _saveAccessToken(accessToken);
+        Navigator.pushNamed(context, ShopScreen.route);
+      } else {
+        _showLoginErrorDialog();
+      }
+      userEmail = "";
+      userPassword = "";
+      userEmailController.clear();
+      userPasswordController.clear();
+    } catch (e) {
       _showLoginErrorDialog();
+    } finally {
+      setState(() {
+        showLoadingSpinner = false;
+      });
     }
-    userEmail = "";
-    userPassword = "";
-    userEmailController.clear();
-    userPasswordController.clear();
   }
 
   void _showLoginErrorDialog() {

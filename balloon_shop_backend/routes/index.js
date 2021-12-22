@@ -17,7 +17,7 @@ router.post('/token', asyncWrap(authController.token))
 
 router.post('/payment/deeplink', authenticateJwt, asyncWrap(paymentController.createDeeplink))
 router.post('/payment/qr', authenticateJwt, asyncWrap(paymentController.createQr))
-router.get('/payment/qr/transaction', authenticateJwt, asyncWrap(paymentController.getTransactionByQrIdAndStatus))
+router.get('/payment/qr/result', authenticateJwt, asyncWrap(paymentController.getPaymentQrResult))
 router.get('/products', authenticateJwt, asyncWrap(productController.getProducts))
 
 router.post('/payment/confirmation', asyncWrap(paymentController.paymentConfirmation))

@@ -43,7 +43,7 @@ module.exports.createQr = async (request, response) => {
  * @param {Express.Request} request
  * @param {Express.Response} response
  */
-module.exports.getTransactionResultByQrId = async (request, response) => {
+module.exports.getPaymentQrResult = async (request, response) => {
     try {
         const { qrId } = request.query
         if (!qrId) {
@@ -75,9 +75,9 @@ module.exports.paymentConfirmation = async (req, res) => {
     try {
         console.log('paymentConfirmation', 'BODY:', req.body)
 
-        const { billPaymentRef1 } = body
-        const transaction = transactionService.updateTransactionStatus(billPaymentRef1, 'PAID').value
-
+        const { billPaymentRef1 } = req.body
+        const record = await transactionService.updateTransactionStatus(billPaymentRef1, 'PAID')
+        const transaction = record.value
         if (transaction.qrId) {
             const waitingResponse = waitingQrStatusResponse[transaction.qrId]
             if (waitingResponse) {
