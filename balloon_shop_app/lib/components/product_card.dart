@@ -52,7 +52,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(kDefaultComponentRadius),
+          borderRadius: BorderRadius.all(kBorderRadiusCommon),
         ),
         width: 260.0,
         child: Column(
@@ -61,61 +61,68 @@ class _ProductCardState extends State<ProductCard> {
             ProductCover(
               imageUrl: widget.imageUrl,
             ),
-            ProductTitle(name: widget.name),
-            Container(color: Colors.grey, child: Text(widget.price)),
             Expanded(
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ProductAmountAdjustButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: _onSubAmount,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      amount.toString(),
-                      style: TextStyle(
-                          color: Colors.deepPurple.shade800, fontSize: 26.0),
-                    ),
-                  ),
-                  ProductAmountAdjustButton(
-                    icon: Icon(Icons.add),
-                    onPressed: _onAddAmount,
-                  )
+                  ProductTitle(name: widget.name),
+                  Container(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        widget.price,
+                        style: kProductPriceTextStyle,
+                      ),
+                      Text(
+                        '฿',
+                        style: kProductPriceUnitTextStyle,
+                      )
+                    ],
+                  )),
                 ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                  border: Border(
+                      top:
+                          BorderSide(color: Colors.grey.shade400, width: 1.5))),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ProductAmountAdjustButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: _onSubAmount,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        width: 32,
+                        child: Center(
+                          child: Text(
+                            amount.toString(),
+                            style: kProductAmountTextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ProductAmountAdjustButton(
+                      icon: Icon(Icons.add),
+                      onPressed: _onAddAmount,
+                    )
+                  ],
+                ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ProductTitle extends StatelessWidget {
-  const ProductTitle({Key? key, required this.name}) : super(key: key);
-  final String name;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Container(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 14.0),
-                child: Center(
-                  child: Text(
-                    name,
-                    overflow: TextOverflow.fade,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                ),
-              )),
-        ],
       ),
     );
   }
@@ -128,21 +135,42 @@ class ProductCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
+      height: 160,
       decoration: BoxDecoration(
         image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(
               imageUrl,
             )),
-        borderRadius: BorderRadius.all(kDefaultComponentRadius),
+        borderRadius: BorderRadius.all(kBorderRadiusCommon),
       ),
       foregroundDecoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [Colors.transparent, Colors.black54.withOpacity(0.2)]),
-          borderRadius: BorderRadius.all(kDefaultComponentRadius)),
+          borderRadius: BorderRadius.all(kBorderRadiusCommon)),
+    );
+  }
+}
+
+class ProductTitle extends StatelessWidget {
+  const ProductTitle({Key? key, required this.name}) : super(key: key);
+  final String name;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                name,
+                overflow: TextOverflow.ellipsis,
+                style: kProductTitleTextStyle,
+              ),
+            )),
+      ],
     );
   }
 }

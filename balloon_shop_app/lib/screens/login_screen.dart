@@ -1,13 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:balloon_shop_app/components/rounded_text_field.dart';
+import 'package:balloon_shop_app/screens/result_screen.dart';
 import 'package:balloon_shop_app/screens/shop_screen.dart';
 import 'package:balloon_shop_app/utilities/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,12 +21,42 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
+  StreamSubscription? _sub;
   String? userEmail;
   String? userPassword;
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
   bool showLoadingSpinner = false;
+
+  void _handleIncomingLinks() {
+    if (!kIsWeb) {
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if (!mounted) return;
+        print('got uri: $uri');
+        setState(() {
+          Navigator.pushNamed(context, ResultScreen.route);
+        });
+      }, onError: (Object err) {
+        if (!mounted) return;
+        print('got err: $err');
+        setState(() {});
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _handleIncomingLinks();
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
 
   void _onLoginClick() async {
     try {
