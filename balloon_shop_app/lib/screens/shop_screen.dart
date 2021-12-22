@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:balloon_shop_app/components/app_background_container.dart';
+import 'package:balloon_shop_app/components/product_card.dart';
 import 'package:balloon_shop_app/screens/qr_code_screen.dart';
 import 'package:balloon_shop_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -174,10 +175,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   child: RefreshIndicator(
                     onRefresh: _getProducts,
                     child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
                         itemCount: products != null ? products!.length : 0,
                         itemBuilder: (context, index) {
                           final data = products![index] as Map;
-                          return ProductItem(
+                          return ProductCard(
                             id: data['_id'],
                             imageUrl: data['imageUrl'],
                             price: data['price'],
@@ -188,9 +190,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                 ),
                 Container(
-                  height: 80,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(kDefaultComponentRadius)),
+                  height: 100,
                   width: double.infinity,
-                  color: Colors.white,
                   child: Center(
                       child: Text(
                     totalPrice.toStringAsFixed(2),
@@ -198,9 +202,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   )),
                 ),
                 Container(
-                  height: 120,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(kDefaultComponentRadius)),
+                  height: 200,
                   width: double.infinity,
-                  color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -262,89 +268,5 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
           )),
     ));
-  }
-}
-
-class ProductItem extends StatefulWidget {
-  const ProductItem(
-      {Key? key,
-      required this.id,
-      required this.name,
-      required this.imageUrl,
-      required this.price,
-      this.onAmountUpdated})
-      : super(key: key);
-  final String id;
-  final String name;
-  final String imageUrl;
-  final String price;
-  final void Function(String, int)? onAmountUpdated;
-
-  @override
-  State<ProductItem> createState() => _ProductItemState();
-}
-
-class _ProductItemState extends State<ProductItem> {
-  int amount = 0;
-
-  _onAddAmount() {
-    setState(() {
-      amount = amount + 1;
-    });
-    widget.onAmountUpdated?.call(widget.id, amount);
-  }
-
-  _onSubAmount() {
-    if (amount > 0) {
-      setState(() {
-        amount = amount - 1;
-      });
-    }
-    widget.onAmountUpdated?.call(widget.id, amount);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    amount = 0;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(1),
-        child: Row(
-          children: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CircleAvatar(
-                  radius: 50.0,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: NetworkImage(widget.imageUrl)),
-            )),
-            Expanded(
-              child: Column(
-                children: [
-                  Container(child: Text(widget.name)),
-                  Container(child: Text(widget.price))
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  TextButton(onPressed: _onAddAmount, child: Text('add')),
-                  Text(amount.toString()),
-                  TextButton(onPressed: _onSubAmount, child: Text('sub'))
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
