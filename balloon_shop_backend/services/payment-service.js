@@ -3,7 +3,7 @@ const cache = new NodeCache()
 
 const ApiResponseCodes = require('../constants/api-response-codes')
 const scbApi = require('../apis/scb-api')
-const productService = require('./product-service')
+const productService = require('./product.service')
 const paymentUtil = require('../utilities/payment.utility')
 
 const _db = require('../data/db')

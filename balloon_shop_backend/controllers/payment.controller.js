@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes")
 const paymentService = require('../services/payment-service')
 const transactionService = require('../services/transactions.service')
 
+let scbToken = {}
 let waitingQrStatusResponse = {}
 
 /**
@@ -9,17 +10,18 @@ let waitingQrStatusResponse = {}
  * @param {Express.Request} request
  * @param {Express.Response} response
  */
-module.exports.createDeeplink = async (req, res) => {
+module.exports.createDeeplink = async (request, response) => {
     try {
-        const { user, body } = req
+        const { user, body } = request
         const deeplink = await paymentService.createDeeplink(user, body)
-        res.status(StatusCodes.OK).send(deeplink).end()
+        response.status(StatusCodes.OK).send(deeplink).end()
     } catch (err) {
         throw err
     }
 }
 
 /**
+ * Create QR code from SCB Open API
  * 
  * @param {Express.Request} request
  * @param {Express.Response} response
@@ -64,7 +66,11 @@ module.exports.getTransactionResultByQrId = async (request, response) => {
     }
 }
 
-
+/**
+ * 
+ * @param {Express.Request} request
+ * @param {Express.Response} response
+ */
 module.exports.paymentConfirmation = async (req, res) => {
     try {
         console.log('paymentConfirmation', 'BODY:', req.body)

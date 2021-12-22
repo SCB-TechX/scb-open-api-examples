@@ -18,11 +18,8 @@ router.post('/token', asyncWrap(authController.token))
 router.post('/payment/deeplink', authenticateJwt, asyncWrap(paymentController.createDeeplink))
 router.post('/payment/qr', authenticateJwt, asyncWrap(paymentController.createQr))
 router.get('/payment/qr/transaction', authenticateJwt, asyncWrap(paymentController.getTransactionByQrIdAndStatus))
+router.get('/products', authenticateJwt, asyncWrap(productController.getProducts))
 
 router.post('/payment/confirmation', asyncWrap(paymentController.paymentConfirmation))
-
-router.get('/products', authenticateJwt, asyncWrap(productController.getProducts))
-// router.post('/products', asyncWrap(productController.createProduct))
-// router.delete('/products/:id', asyncWrap(productController.deleteProduct))
 
 module.exports = router
