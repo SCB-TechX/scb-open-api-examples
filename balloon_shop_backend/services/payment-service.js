@@ -109,24 +109,3 @@ module.exports.createQr = async (user, body) => {
         throw err
     }
 }
-
-module.exports.paymentConfirmation = async (body) => {
-    try {
-        const { billPaymentRef1 } = body
-        const transaction = await _db.instance()
-            .collection(TRANSACTIONS_COLLECTION)
-            .findOneAndUpdate(
-                {
-                    transactionRef: billPaymentRef1
-                },
-                {
-                    $set: { transactionStatus: 'PAID' }
-                }
-            )
-        console.log(transaction)
-        return transaction.value
-    } catch (err) {
-        throw err
-    }
-
-}

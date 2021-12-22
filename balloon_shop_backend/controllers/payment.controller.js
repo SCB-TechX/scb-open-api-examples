@@ -74,7 +74,10 @@ module.exports.getTransactionResultByQrId = async (request, response) => {
 module.exports.paymentConfirmation = async (req, res) => {
     try {
         console.log('paymentConfirmation', 'BODY:', req.body)
-        const transaction = await paymentService.paymentConfirmation(req.body)
+
+        const { billPaymentRef1 } = body
+        const transaction = transactionService.updateTransactionStatus(billPaymentRef1, 'PAID').value
+
         if (transaction.qrId) {
             const waitingResponse = waitingQrStatusResponse[transaction.qrId]
             if (waitingResponse) {

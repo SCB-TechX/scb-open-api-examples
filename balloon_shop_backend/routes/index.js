@@ -5,7 +5,7 @@ const authenticateJwt = require('../middlewares/auth-jwt-middleware')
 
 const authController = require('../controllers/auth.controller')
 const paymentController = require('../controllers/payment.controller')
-const productController = require('../controllers/product-controller')
+const productController = require('../controllers/product.controller')
 
 const asyncWrap = fn =>
     function asyncUtilWrap(req, res, next, ...args) {
