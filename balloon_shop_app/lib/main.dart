@@ -2,6 +2,7 @@ import 'package:balloon_shop_app/screens/login_screen.dart';
 import 'package:balloon_shop_app/screens/qr_code_screen.dart';
 import 'package:balloon_shop_app/screens/result_screen.dart';
 import 'package:balloon_shop_app/screens/shop_screen.dart';
+import 'package:balloon_shop_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 void main() => {runApp(const BalloonShopApp())};
@@ -20,7 +21,8 @@ class _BalloonShopAppState extends State<BalloonShopApp> {
       title: 'Balloon Shop',
       theme: ThemeData(
           primaryColor: Colors.deepPurple,
-          appBarTheme: const AppBarTheme(color: Colors.deepPurple),
+          appBarTheme: const AppBarTheme(
+              color: Colors.deepPurple, titleTextStyle: kAppBarTextStyle),
           fontFamily: 'Roboto'),
       initialRoute: LoginScreen.route,
       routes: {

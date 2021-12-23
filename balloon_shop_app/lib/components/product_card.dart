@@ -48,12 +48,19 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(6.0, 12.0, 6.0, 12.0),
+      padding: EdgeInsets.only(bottom: 6, left: 6, right: 6, top: 3),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(kBorderRadiusCommon),
-        ),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(kBorderRadiusCommon),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.8),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: Offset(1, 1), // changes position of shadow
+              ),
+            ]),
         width: 260.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:balloon_shop_app/components/product_card.dart';
@@ -70,21 +71,22 @@ class _ShopScreenState extends State<ShopScreen> {
               "Content-Type": "application/json"
             },
             body: _createRequestBody());
-        print(response.body);
-        var qrImage = jsonDecode(response.body)['qrImage'];
-        var qrcodeId = jsonDecode(response.body)['qrcodeId'];
+        if (response.statusCode == HttpStatus.ok) {
+          var qrImage = jsonDecode(response.body)['qrImage'];
+          var qrcodeId = jsonDecode(response.body)['qrcodeId'];
 
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => QrCodeScreen(
-                      qrImage: qrImage,
-                      qrId: qrcodeId,
-                    )));
-        setState(() {
-          productOrders.clear();
-          totalPrice = 0;
-        });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QrCodeScreen(
+                        qrImage: qrImage,
+                        qrId: qrcodeId,
+                      )));
+          setState(() {
+            productOrders.clear();
+            totalPrice = 0;
+          });
+        }
       }
     } finally {
       setState(() {
@@ -166,110 +168,109 @@ class _ShopScreenState extends State<ShopScreen> {
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("BALLOON SHOP",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0,
-                    fontFamily: 'Sen',
-                    letterSpacing: 2.0)),
+            title: Text("BALLOON SHOP"),
           ),
           body: SafeArea(
             child: Column(
               children: [
                 Container(
+                  margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
+                  decoration: kShopBoxDecoration,
                   height: 320,
-                  child: RefreshIndicator(
-                    onRefresh: _getProducts,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: products != null ? products!.length : 0,
-                        itemBuilder: (context, index) {
-                          final data = products![index] as Map;
-                          return ProductCard(
-                            id: data['_id'],
-                            imageUrl: data['imageUrl'],
-                            price: data['price'],
-                            name: data['name'],
-                            onAmountUpdated: _onAmountUpdated,
-                          );
-                        }),
+                  child: Column(
+                    children: [
+                      BoxLabel(
+                        value: 'CATALOG',
+                      ),
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: _getProducts,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  products != null ? products!.length : 0,
+                              itemBuilder: (context, index) {
+                                final data = products![index] as Map;
+                                return ProductCard(
+                                  id: data['_id'],
+                                  imageUrl: data['imageUrl'],
+                                  price: data['price'],
+                                  name: data['name'],
+                                  onAmountUpdated: _onAmountUpdated,
+                                );
+                              }),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(kBorderRadiusCommon)),
-                      height: 100,
-                      width: double.infinity,
-                      child: Center(
-                          child: Column(
-                        children: [
-                          BoxLabel(value: 'Total Price'),
-                          Expanded(
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                                textBaseline: TextBaseline.alphabetic,
-                                children: [
-                                  Text(
-                                    totalPrice.toStringAsFixed(2),
-                                    style: kTotalPriceTextStyle,
-                                  ),
-                                  Text(
-                                    '฿',
-                                    style: kTotalPriceUnitTextStyle,
-                                  )
-                                ],
-                              ),
+                  child: Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
+                    decoration: kShopBoxDecoration,
+                    height: 100,
+                    width: double.infinity,
+                    child: Center(
+                        child: Column(
+                      children: [
+                        BoxLabel(value: 'TOTAL PRICE'),
+                        Expanded(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  totalPrice.toStringAsFixed(2),
+                                  style: kTotalPriceTextStyle,
+                                ),
+                                Text(
+                                  '฿',
+                                  style: kTotalPriceUnitTextStyle,
+                                )
+                              ],
                             ),
                           ),
-                        ],
-                      )),
-                    ),
+                        ),
+                      ],
+                    )),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 12, 6, 3),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(kBorderRadiusCommon)),
-                    height: 170,
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        BoxLabel(
-                          value: 'Payment Method',
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PaymentMethodButton(
-                              onPressed: _onSelectPaymentMethod,
-                              paymentMethodValue: PaymentMethod.qr,
-                              selectedPaymentMethod: selectedPaymentMethod,
-                              imagePath: 'assets/api-icon-qr-code-circle.png',
-                            ),
-                            PaymentMethodButton(
-                              onPressed: _onSelectPaymentMethod,
-                              paymentMethodValue: PaymentMethod.easy,
-                              selectedPaymentMethod: selectedPaymentMethod,
-                              imagePath: 'assets/api-icon-payment-circle.png',
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                          child: PaymentMethodDescriptionBox(
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
+                  decoration: kShopBoxDecoration,
+                  height: 170,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      BoxLabel(
+                        value: 'PAYMENT METHOD',
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PaymentMethodButton(
+                            onPressed: _onSelectPaymentMethod,
+                            paymentMethodValue: PaymentMethod.qr,
                             selectedPaymentMethod: selectedPaymentMethod,
+                            imagePath: 'assets/api-icon-qr-code-circle.png',
                           ),
-                        )
-                      ],
-                    ),
+                          PaymentMethodButton(
+                            onPressed: _onSelectPaymentMethod,
+                            paymentMethodValue: PaymentMethod.easy,
+                            selectedPaymentMethod: selectedPaymentMethod,
+                            imagePath: 'assets/api-icon-payment-circle.png',
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: PaymentMethodDescriptionBox(
+                          selectedPaymentMethod: selectedPaymentMethod,
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 TextButton(
@@ -278,16 +279,12 @@ class _ShopScreenState extends State<ShopScreen> {
                     child: Container(
                       color: Colors.white,
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 10.0),
+                      margin: EdgeInsets.only(top: 8.0),
                       height: 60.0,
                       child: Center(
                           child: Text(
                         'CHECKOUT',
-                        style: TextStyle(
-                            fontFamily: 'Sen',
-                            fontSize: 20.0,
-                            letterSpacing: 2.0,
-                            color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F)),
+                        style: kBottomButtonTextStyle,
                       )),
                     ))
               ],
@@ -303,7 +300,7 @@ class BoxLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 6),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Text(
         value,
         style: kBoxLabelTextStyle,
@@ -373,8 +370,8 @@ class PaymentMethodDescriptionBox extends StatelessWidget {
           ),
           Text(
               selectedPaymentMethod == PaymentMethod.qr
-                  ? 'Generate QR code and enable customer scan with their banking application.'
-                  : 'Enable deep-linking and payment completion between your app and SCB EASY App',
+                  ? 'Generate QR code and enable customer to scan with their banking application.'
+                  : 'Deep-linking to SCB EASY App and redirect back after payment completed.',
               textAlign: TextAlign.center,
               style: kPaymentMethodDescriptionTextStyle)
         ],

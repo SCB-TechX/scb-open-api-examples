@@ -173,11 +173,7 @@ class _LoginScreenState extends State<LoginScreen>
                     child: Center(
                         child: Text(
                       'LOGIN',
-                      style: TextStyle(
-                          fontFamily: 'Sen',
-                          fontSize: 20.0,
-                          letterSpacing: 2.0,
-                          color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F)),
+                      style: kBottomButtonTextStyle,
                     )),
                   ),
                 )

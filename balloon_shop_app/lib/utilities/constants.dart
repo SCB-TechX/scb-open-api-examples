@@ -23,6 +23,13 @@ const kAppBackgroundColor = LinearGradient(
       Color.fromARGB(0xFF, 0x9F, 0x0D, 0xB7)
     ]);
 
+const kAppBarTextStyle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 18.0,
+    fontFamily: 'Sen',
+    letterSpacing: 2.0);
+
 const kProductTitleTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
   fontSize: 16.0,
@@ -49,8 +56,8 @@ const kProductAmountTextStyle = TextStyle(
     fontFamily: 'BebasNeue',
     letterSpacing: 2);
 
-const kBoxLabelTextStyle =
-    TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600);
+const kBoxLabelTextStyle = TextStyle(
+    fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.black54);
 
 const kTotalPriceTextStyle = TextStyle(
     color: Colors.purple,
@@ -71,4 +78,12 @@ const kPaymentMethodTitleTextStyle =
 const kPaymentMethodDescriptionTextStyle =
     TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
+const kBottomButtonTextStyle = TextStyle(
+    fontFamily: 'Sen',
+    fontSize: 20.0,
+    letterSpacing: 2.0,
+    color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F));
+
 const kBorderRadiusCommon = Radius.circular(16.0);
+const kShopBoxDecoration = BoxDecoration(
+    color: Colors.white, borderRadius: BorderRadius.all(kBorderRadiusCommon));

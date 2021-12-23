@@ -39,7 +39,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
 
   Future<void> _getAccessToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    accessToken = await sharedPreferences.get(kAccessTokenKey).toString();
+    accessToken = sharedPreferences.get(kAccessTokenKey).toString();
   }
 
   Future<void> _getTransactionResultByQrCode() async {
@@ -74,13 +74,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("QR CODE",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0,
-                    fontFamily: 'Sen',
-                    letterSpacing: 2.0)),
+            title: Text("QR CODE"),
           ),
           body: SafeArea(
             child: Padding(
