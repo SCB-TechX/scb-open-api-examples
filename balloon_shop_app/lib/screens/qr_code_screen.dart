@@ -77,14 +77,36 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
             title: Text("QR CODE"),
           ),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    height: 380,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(kCommonRadius),
+                        image: DecorationImage(
+                            image: MemoryImage(base64Decode(widget.qrImage!)),
+                            fit: BoxFit.fitWidth))),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+                  padding: EdgeInsets.all(6),
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: MemoryImage(base64Decode(widget.qrImage!)),
-                          fit: BoxFit.fitWidth))),
+                  decoration: kCommonBoxDecoration,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                    decoration: kDescriptionBoxDecoration,
+                    child: Text(
+                      'Scan this QR code with\nSCB EASY Simulator App',
+                      textAlign: TextAlign.center,
+                      style: kQrCodeDescriptionTextStyle,
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ),

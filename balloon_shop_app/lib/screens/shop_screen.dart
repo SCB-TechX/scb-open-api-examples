@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:balloon_shop_app/components/app_background_container.dart';
 import 'package:balloon_shop_app/components/product_card.dart';
+import 'package:balloon_shop_app/screens/login_screen.dart';
 import 'package:balloon_shop_app/screens/qr_code_screen.dart';
 import 'package:balloon_shop_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _ShopScreenState extends State<ShopScreen> {
       showLoadingSpinner = true;
     });
     try {
-      if (selectedPaymentMethod == 1) {
+      if (selectedPaymentMethod == PaymentMethod.easy) {
         http.Response response = await http.post(
             Uri.https(kBalloonShopBackendEndpoint, kUriCreatePaymentDeeplink),
             headers: {
@@ -86,6 +87,8 @@ class _ShopScreenState extends State<ShopScreen> {
             productOrders.clear();
             totalPrice = 0;
           });
+        } else if (response.statusCode == HttpStatus.unauthorized) {
+          _showSessionExpiredErrorDialog();
         }
       }
     } finally {
@@ -160,6 +163,25 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  void _showSessionExpiredErrorDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text('Session Expired'),
+            content: new Text('You will be redirected to the login screen'),
+            actions: <Widget>[
+              new TextButton(
+                  onPressed: () {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName(LoginScreen.route));
+                  },
+                  child: new Text('OK'))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBackgroundContainer(
@@ -175,7 +197,7 @@ class _ShopScreenState extends State<ShopScreen> {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
-                  decoration: kShopBoxDecoration,
+                  decoration: kCommonBoxDecoration,
                   height: 320,
                   child: Column(
                     children: [
@@ -208,7 +230,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   child: Container(
                     margin:
                         EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
-                    decoration: kShopBoxDecoration,
+                    decoration: kCommonBoxDecoration,
                     height: 100,
                     width: double.infinity,
                     child: Center(
@@ -240,7 +262,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
-                  decoration: kShopBoxDecoration,
+                  decoration: kCommonBoxDecoration,
                   height: 170,
                   width: double.infinity,
                   child: Column(
@@ -279,7 +301,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     child: Container(
                       color: Colors.white,
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 8.0),
+                      margin: EdgeInsets.only(top: 4.0),
                       height: 60.0,
                       child: Center(
                           child: Text(
@@ -330,7 +352,7 @@ class PaymentMethodButton extends StatelessWidget {
             color: selectedPaymentMethod == paymentMethodValue
                 ? Colors.purple.shade400
                 : Colors.grey.shade300,
-            borderRadius: BorderRadius.all(kBorderRadiusCommon)),
+            borderRadius: BorderRadius.all(kCommonRadius)),
         height: 60,
         width: 60,
         child: TextButton(
@@ -355,9 +377,7 @@ class PaymentMethodDescriptionBox extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(4),
       padding: EdgeInsets.all(6),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(kBorderRadiusCommon),
-          color: Colors.purple.shade50),
+      decoration: kDescriptionBoxDecoration,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

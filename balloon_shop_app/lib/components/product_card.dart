@@ -52,7 +52,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(kBorderRadiusCommon),
+            borderRadius: BorderRadius.all(kCommonRadius),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.8),
@@ -149,14 +149,14 @@ class ProductCover extends StatelessWidget {
             image: NetworkImage(
               imageUrl,
             )),
-        borderRadius: BorderRadius.all(kBorderRadiusCommon),
+        borderRadius: BorderRadius.all(kCommonRadius),
       ),
       foregroundDecoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [Colors.transparent, Colors.black54.withOpacity(0.2)]),
-          borderRadius: BorderRadius.all(kBorderRadiusCommon)),
+          borderRadius: BorderRadius.all(kCommonRadius)),
     );
   }
 }

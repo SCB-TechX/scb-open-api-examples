@@ -78,12 +78,17 @@ const kPaymentMethodTitleTextStyle =
 const kPaymentMethodDescriptionTextStyle =
     TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
+const kQrCodeDescriptionTextStyle =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+
 const kBottomButtonTextStyle = TextStyle(
     fontFamily: 'Sen',
     fontSize: 20.0,
     letterSpacing: 2.0,
     color: Color.fromARGB(0xFF, 0x47, 0x16, 0x9F));
 
-const kBorderRadiusCommon = Radius.circular(16.0);
-const kShopBoxDecoration = BoxDecoration(
-    color: Colors.white, borderRadius: BorderRadius.all(kBorderRadiusCommon));
+const kCommonRadius = Radius.circular(16.0);
+const kCommonBoxDecoration = BoxDecoration(
+    color: Colors.white, borderRadius: BorderRadius.all(kCommonRadius));
+const kDescriptionBoxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.all(kCommonRadius), color: Color(0xFFF3E5F5));
