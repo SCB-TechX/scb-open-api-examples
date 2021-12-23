@@ -83,16 +83,14 @@ class _ShopScreenState extends State<ShopScreen> {
                         qrImage: qrImage,
                         qrId: qrcodeId,
                       )));
-          setState(() {
-            productOrders.clear();
-            totalPrice = 0;
-          });
         } else if (response.statusCode == HttpStatus.unauthorized) {
           _showSessionExpiredErrorDialog();
         }
       }
     } finally {
       setState(() {
+        productOrders.clear();
+        totalPrice = 0;
         showLoadingSpinner = false;
       });
     }
