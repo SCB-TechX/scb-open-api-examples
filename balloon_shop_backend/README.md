@@ -1,10 +1,12 @@
 Balloon Shop Backend
 ====================
 This is an example project of partner backend service connected to [SCB Open API](https://developer.scb/). 
-Using [NodeJs](https://nodejs.org/) with some widely used libraries. the API server with [ExpressJs](https://expressjs.com/), JWT authentication with [PassportJs](https://www.passportjs.org/). And [MongoDB](https://www.mongodb.com/) as the database layer.
+Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API server with [ExpressJs](https://expressjs.com/), JWT authentication with [PassportJs](https://www.passportjs.org/). And [MongoDB](https://www.mongodb.com/) as the database layer.
 
 Documentation
 -------------
+We provide service information documents such as API specification and the data dictionary to make you understand the service faster.
+- Data
 - API spec / sequence diagram
 - postman collection
 
@@ -39,3 +41,4 @@ Contributing
 - API Documents
 - Unit tests
 - Structuring projects
+- Login security
