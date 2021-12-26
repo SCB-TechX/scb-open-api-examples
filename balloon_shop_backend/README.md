@@ -74,16 +74,37 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 ```http
 POST /token
 ```
-##### Body
+##### Request 
+###### Header
+| Key            | Value                          |
+| :------------- | :----------------------------- |
+| `Content-Type` | **Required**. application/json |
+###### Body
 | Parameter  | Type     | Description                          |
 | :--------- | :------- | :----------------------------------- |
 | `email`    | `string` | **Required**. Email of login user    |
 | `password` | `string` | **Required**. Password of login user |
 
+##### Response 
+###### Header
+| Key            | Value                          |
+| :------------- | :----------------------------- |
+| `Content-Type` | **Required**. application/json |
+###### Body
+| Parameter     | Type     | Description                     |
+| :------------ | :------- | :------------------------------ |
+| `accessToken` | `string` | JWT Token for access secure API |
+
 #### Get Products
 ```http
 GET /products
 ```
+##### Request Header
+| Key             | Value                              |
+| :-------------- | :--------------------------------- |
+| `Content-Type`  | **Required**. application/json     |
+| `Authorization` | **Required**. Bearer {accessToken} |
+
 
 #### Payment Confirmation Callback
 ```http
