@@ -4,10 +4,31 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ---
 
-## Section 1 : Documentation
+## Getting started
+To make it easy for you to get started, here's a list of recommended setup steps.
+1. Sign up SCB Open API developer account [here](https://developer.scb/).
+2. Setup your MongoDB server.
+3. Setup environment variables (`.env` file)
+```
+PORT=
+SERVER_JWT_SECRET= config your own
+SCB_API_KEY= from SCB developer
+SCB_API_SECRET= from SCB developer
+SCB_API_ENDPOINT=https://api-sandbox.partners.scb/partners/sandbox
+SCB_BILLER_ID= from SCB developer
+SCB_BILLER_REF3_PREFIX= from SCB developer
+SCB_MERCHANT_ID= from SCB developer
+SCB_MERCHANT_TERMINAL_ID= from SCB developer
+DB_CONNECTION_URI= MongoDB connection URI
+```
+4. Start development server `npm start`
+
+---
+
+## Documentation
 We provide service information such as API specification and the data collections detail to make you learn the service faster.
 
-### 1.1) Collections
+### Collections
 As mention above this project use [MongoDB](https://www.mongodb.com/). Here's the collections description.
 
 #### users
@@ -40,7 +61,7 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 }
 ```
 
-### 1.2) API specification
+### API specification
 | Status Code | Return Code | Description             |
 | :---------- | :---------- | :---------------------- |
 | 200         |             | `OK`                    |
@@ -83,27 +104,6 @@ POST /payment/qr
 ```http
 GET /payment/qr/status
 ```
-
----
-
-## Getting started
-To make it easy for you to get started, here's a list of recommended setup steps.
-1. Sign up SCB Open API developer account [here](https://developer.scb/).
-2. Setup your MongoDB server.
-3. Setup environment variables (`.env` file)
-```
-PORT=
-SERVER_JWT_SECRET= config your own
-SCB_API_KEY= from SCB developer
-SCB_API_SECRET= from SCB developer
-SCB_API_ENDPOINT=https://api-sandbox.partners.scb/partners/sandbox
-SCB_BILLER_ID= from SCB developer
-SCB_BILLER_REF3_PREFIX= from SCB developer
-SCB_MERCHANT_ID= from SCB developer
-SCB_MERCHANT_TERMINAL_ID= from SCB developer
-DB_CONNECTION_URI= MongoDB connection URI
-```
-4. Start development server `npm start`
 
 ---
 
