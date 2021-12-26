@@ -5,10 +5,18 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 Documentation
 -------------
-We provide service information documents such as API specification and the data dictionary to make you understand the service faster.
-- Data
-- API spec / sequence diagram
-- postman collection
+We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
+# Collections
+## Users
+## Products
+## Transactions
+# API specification
+## Create Login Token
+## Get Products
+## Payment Confirmation Callback
+## Generate Payment QR Code
+## Get Payment QR Code Status
+## Generate Payment Deeplink
 
 Getting started
 ---------------
