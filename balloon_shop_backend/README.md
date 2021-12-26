@@ -2,6 +2,8 @@
 This is an example project of partner backend service connected to [SCB Open API](https://developer.scb/). 
 Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API server with [ExpressJs](https://expressjs.com/), JWT authentication with [PassportJs](https://www.passportjs.org/). And [MongoDB](https://www.mongodb.com/) as the database layer.
 
+---
+
 ## Documentation
 We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
 ### Collections
@@ -15,6 +17,8 @@ We provide service information documents such as API specification and the data 
 #### Generate Payment QR Code
 #### Get Payment QR Code Status
 #### Generate Payment Deeplink
+
+---
 
 ## Getting started
 To make it easy for you to get started, here's a list of recommended setup steps.
@@ -35,10 +39,14 @@ DB_CONNECTION_URI= MongoDB connection URI
 ```
 4. Start development server `npm start`
 
+---
+
 ## Deployment 
 Before integrate with the frontend application and the SCB server (webhooks for payment confirmation callback) you have to run the service with public HTTPS endpoint, here're some easy ways to do it.
 - [ngrok](https://ngrok.com/) - Exposing your local server to a public URL. 
 - [Heroku](https://heroku.com/) -  Cloud platform service.
+
+---
 
 ## Contributing
 - API Documents
