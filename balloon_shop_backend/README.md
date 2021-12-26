@@ -4,7 +4,7 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ---
 
-## Getting started
+## 1. Getting started
 To make it easy for you to get started, here's a list of recommended setup steps.
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
@@ -21,7 +21,8 @@ SCB_MERCHANT_ID= from SCB developer
 SCB_MERCHANT_TERMINAL_ID= from SCB developer
 DB_CONNECTION_URI= MongoDB connection URI
 ```
-4. Start development server `npm start`
+4. Install dependency `npm install`
+5. Start development server `npm start`
 
 ---
 
@@ -62,13 +63,6 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 ```
 
 ### API specification
-| Status Code | Return Code | Description             |
-| :---------- | :---------- | :---------------------- |
-| 200         |             | `OK`                    |
-| 401         |             | `CREATED`               |
-| 400         |             | `BAD REQUEST`           |
-| 404         |             | `NOT FOUND`             |
-| 500         |             | `INTERNAL SERVER ERROR` |
 
 #### Create Login Token
 ```http
@@ -87,24 +81,42 @@ POST /token
 
 ##### Response 
 ###### Header
-| Key            | Value                          |
-| :------------- | :----------------------------- |
-| `Content-Type` | **Required**. application/json |
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
 ###### Body
 | Parameter     | Type     | Description                     |
 | :------------ | :------- | :------------------------------ |
 | `accessToken` | `string` | JWT Token for access secure API |
+###### Error
+| Status Code | Return Code | Description               |
+| :---------- | :---------- | :------------------------ |
+| `401`       | `40101`     | invalid email or password |
+| `500 `      | `50001`     | internal server error     |
+| `500 `      | `50002`     | fail to request scb token |
+
+
 
 #### Get Products
 ```http
 GET /products
 ```
-##### Request Header
+##### Request 
+###### Header
 | Key             | Value                              |
 | :-------------- | :--------------------------------- |
 | `Content-Type`  | **Required**. application/json     |
-| `Authorization` | **Required**. Bearer {accessToken} |
+| `Authorization` | **Required**. Bearer `accessToken` |
 
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter     | Type     | Description                     |
+| :------------ | :------- | :------------------------------ |
+| `accessToken` | `string` | JWT Token for access secure API |
 
 #### Payment Confirmation Callback
 ```http
