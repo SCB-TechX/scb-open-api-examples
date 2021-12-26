@@ -6,10 +6,39 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ## Documentation
 We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
+
 ### Collections
-#### Users
-#### Products
-#### Transactions
+
+#### users
+```
+{
+    "_id" : ObjectId,
+    "email" : String,
+    "password" : String
+}
+```
+
+#### products
+```
+{
+    "_id": ObjectId,
+    "imageUrl" : String,
+    "name" : String,
+    "price": Double
+}
+```
+
+#### transactions
+```
+{
+    "_id" : ObjectId,
+    "transactionStatus" : String,
+    "transactionRef": String,
+    "qrId": String,
+    "paymentMethod": String
+}
+```
+
 ### API specification
 #### Create Login Token
 #### Get Products
