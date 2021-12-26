@@ -10,7 +10,7 @@ We provide service information documents such as API specification and the data 
 ### Collections
 
 #### users
-```
+```javascript
 {
     "_id" : ObjectId,
     "email" : String,
@@ -19,23 +19,23 @@ We provide service information documents such as API specification and the data 
 ```
 
 #### products
-```
+```javascript
 {
-    "_id": ObjectId,
+    "_id" : ObjectId,
     "imageUrl" : String,
     "name" : String,
-    "price": Double
+    "price" : Double
 }
 ```
 
 #### transactions
-```
+```javascript
 {
     "_id" : ObjectId,
     "transactionStatus" : String,
-    "transactionRef": String,
-    "qrId": String,
-    "paymentMethod": String
+    "transactionRef" : String,
+    "qrId" : String,
+    "paymentMethod" : String
 }
 ```
 
