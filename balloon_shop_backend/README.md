@@ -40,12 +40,36 @@ We provide service information documents such as API specification and the data 
 ```
 
 ### API specification
+
 #### Create Login Token
+```http
+POST /token
+```
+
 #### Get Products
+```http
+GET /products
+```
+
 #### Payment Confirmation Callback
-#### Generate Payment QR Code
-#### Get Payment QR Code Status
+```http
+POST /payment/confirmation
+```
+
 #### Generate Payment Deeplink
+```http
+POST /payment/deeplink
+```
+
+#### Generate Payment QR Code
+```http
+POST /payment/qr
+```
+
+#### Get Payment QR Code Status
+```http
+GET /payment/qr/status
+```
 
 ---
 
