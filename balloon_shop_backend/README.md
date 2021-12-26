@@ -1,25 +1,22 @@
-Balloon Shop Backend
-====================
+# Balloon Shop Backend
 This is an example project of partner backend service connected to [SCB Open API](https://developer.scb/). 
 Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API server with [ExpressJs](https://expressjs.com/), JWT authentication with [PassportJs](https://www.passportjs.org/). And [MongoDB](https://www.mongodb.com/) as the database layer.
 
-Documentation
--------------
+## Documentation
 We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
-# Collections
-## Users
-## Products
-## Transactions
-# API specification
-## Create Login Token
-## Get Products
-## Payment Confirmation Callback
-## Generate Payment QR Code
-## Get Payment QR Code Status
-## Generate Payment Deeplink
+### Collections
+#### Users
+#### Products
+#### Transactions
+### API specification
+#### Create Login Token
+#### Get Products
+#### Payment Confirmation Callback
+#### Generate Payment QR Code
+#### Get Payment QR Code Status
+#### Generate Payment Deeplink
 
-Getting started
----------------
+## Getting started
 To make it easy for you to get started, here's a list of recommended setup steps.
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
@@ -38,14 +35,12 @@ DB_CONNECTION_URI= MongoDB connection URI
 ```
 4. Start development server `npm start`
 
-Deployment 
-----------
+## Deployment 
 Before integrate with the frontend application and the SCB server (webhooks for payment confirmation callback) you have to run the service with public HTTPS endpoint, here're some easy ways to do it.
 - [ngrok](https://ngrok.com/) - Exposing your local server to a public URL. 
 - [Heroku](https://heroku.com/) -  Cloud platform service.
 
-Contributing
-------------
+## Contributing
 - API Documents
 - Unit tests
 - Structuring projects
