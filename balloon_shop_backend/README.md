@@ -4,10 +4,10 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ---
 
-## 1 Documentation
-We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
+## Section 1 : Documentation
+We provide service information such as API specification and the data collections detail to make you learn the service faster.
 
-### 1.1 Collections
+### 1.1) Collections
 As mention above this project use [MongoDB](https://www.mongodb.com/). Here's the collections description.
 
 #### users
@@ -40,7 +40,7 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 }
 ```
 
-### API specification
+### 1.2) API specification
 | Status Code | Return Code | Description             |
 | :---------- | :---------- | :---------------------- |
 | 200         |             | `OK`                    |
