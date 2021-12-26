@@ -4,10 +4,11 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ---
 
-## Documentation
+## 1 Documentation
 We provide service information documents such as API specification and the data dictionary to make you learn the service faster.
 
-### Collections
+### 1.1 Collections
+As mention above this project use [MongoDB](https://www.mongodb.com/). Here's the collections description.
 
 #### users
 ```javascript
@@ -40,11 +41,19 @@ We provide service information documents such as API specification and the data 
 ```
 
 ### API specification
+| Status Code | Return Code | Description             |
+| :---------- | :---------- | :---------------------- |
+| 200         |             | `OK`                    |
+| 401         |             | `CREATED`               |
+| 400         |             | `BAD REQUEST`           |
+| 404         |             | `NOT FOUND`             |
+| 500         |             | `INTERNAL SERVER ERROR` |
 
 #### Create Login Token
 ```http
 POST /token
 ```
+##### Body
 | Parameter  | Type     | Description                          |
 | :--------- | :------- | :----------------------------------- |
 | `email`    | `string` | **Required**. Email of login user    |
