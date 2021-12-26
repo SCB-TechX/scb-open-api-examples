@@ -45,6 +45,10 @@ We provide service information documents such as API specification and the data 
 ```http
 POST /token
 ```
+| Parameter  | Type     | Description                          |
+| :--------- | :------- | :----------------------------------- |
+| `email`    | `string` | **Required**. Email of login user    |
+| `password` | `string` | **Required**. Password of login user |
 
 #### Get Products
 ```http
