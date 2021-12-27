@@ -154,42 +154,6 @@ GET /products
 | `500 `      | `50001`     | internal server error |
 
 
-#### Payment Confirmation Callback
-```http
-POST /payment/confirmation
-```
-
-![payment_confirmation](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/payment_confirmation.puml)
-
-##### Request 
-###### Header
-| Key            | Value                          |
-| :------------- | :----------------------------- |
-| `Content-Type` | **Required**. application/json |
-###### Body
-| Parameter         | Type     | Description                                                                      |
-| :---------------- | :------- | :------------------------------------------------------------------------------- |
-| `billPaymentRef1` | `string` | **Required**. For reference with `transactionRef` in the transactions collection |
-##### Response 
-###### Header
-| Key            | Value            |
-| :------------- | :--------------- |
-| `Content-Type` | application/json |
-###### Body
-| Parameter           | Type     | Description                                             |
-| :------------------ | :------- | :------------------------------------------------------ |
-| `_id`               | `string` | Transaction identifier                                  |
-| `transactionStatus` | `string` | Transaction status                                      |
-| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
-| `qrId`              | `string` | Transaction QR code identifier                          |
-| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
-###### Return Code
-| Status Code | Return Code | Description           |
-| :---------- | :---------- | :-------------------- |
-| `401`       | `40102`     | invalid token         |
-| `500 `      | `50001`     | internal server error |
-
-
 #### Generate Payment Deeplink
 ```http
 POST /payment/deeplink
@@ -297,6 +261,43 @@ GET /payment/qr/status
 | :---------- | :---------- | :-------------------- |
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
+
+
+#### Payment Confirmation Callback
+```http
+POST /payment/confirmation
+```
+
+![payment_confirmation](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/payment_confirmation.puml)
+
+##### Request 
+###### Header
+| Key            | Value                          |
+| :------------- | :----------------------------- |
+| `Content-Type` | **Required**. application/json |
+###### Body
+| Parameter         | Type     | Description                                                                      |
+| :---------------- | :------- | :------------------------------------------------------------------------------- |
+| `billPaymentRef1` | `string` | **Required**. For reference with `transactionRef` in the transactions collection |
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter           | Type     | Description                                             |
+| :------------------ | :------- | :------------------------------------------------------ |
+| `_id`               | `string` | Transaction identifier                                  |
+| `transactionStatus` | `string` | Transaction status                                      |
+| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
+| `qrId`              | `string` | Transaction QR code identifier                          |
+| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
+
 
 ---
 ## Contributing
