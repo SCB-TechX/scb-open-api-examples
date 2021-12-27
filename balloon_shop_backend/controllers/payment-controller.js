@@ -1,48 +1,9 @@
 const { StatusCodes } = require("http-status-codes")
 const transactionService = require('../services/transactions-service')
-const productService = require('../services/product-service')
 const paymentUtil = require('../utilities/payment-utility')
 const scbApi = require('../apis/scb-api')
 
-let scbToken = {}
 let waitingQrStatusResponse = {}
-
-const getScbToken = async () => {
-    if (!scbToken
-        || !scbToken.accessToken
-        || !scbToken.expireDate
-        || scbToken.expireDate < Date.now()) {
-
-        let tokenResponse = await scbApi.tokenV1()
-        let tokenResponseData = tokenResponse.data
-        if (!tokenResponseData
-            || !tokenResponseData.accessToken
-            || !tokenResponseData.expiresAt) {
-            throw { responseCode: ApiResponseCodes.REQUEST_SCB_TOKEN_FAIL }
-        }
-        scbToken = {
-            ...tokenResponseData,
-            expireDate: new Date(tokenResponseData.expiresAt * 1000)
-        }
-        console.log('scbToken:', scbToken)
-    }
-    return scbToken
-}
-const calculateTotalPrice = async (orderedProducts) => {
-    let totalPrice = 0.00
-    const products = await productService.getProducts()
-    orderedProducts.forEach(orderedProduct => {
-        const product = products.find(product => product._id.toString() === orderedProduct._id)
-        if (product) {
-            totalPrice = totalPrice + (product.price * orderedProduct.amount)
-        } else {
-            console.log('product', product)
-            throw {}
-        }
-    })
-    console.log('totalPrice', totalPrice)
-    return totalPrice
-}
 
 /**
  * 
@@ -52,11 +13,10 @@ const calculateTotalPrice = async (orderedProducts) => {
 module.exports.createDeeplink = async (request, response) => {
     try {
         const { user, body } = request
-        const scbToken = await getScbToken()
         const { orderedProducts } = body
-        const totalPrice = await calculateTotalPrice(orderedProducts)
+        const totalPrice = await paymentUtil.calculateTotalPrice(orderedProducts)
         const transactionRef = paymentUtil.genarateTransactionReference()
-        const deeplinkResponse = await scbApi.createPaymentDeeplink(scbToken.accessToken, {
+        const deeplinkResponse = await scbApi.createPaymentDeeplink({
             user: user,
             amount: totalPrice,
             transactionRef: transactionRef,
@@ -87,11 +47,11 @@ module.exports.createDeeplink = async (request, response) => {
  */
 module.exports.createQr = async (request, response) => {
     try {
-        const scbToken = await getScbToken()
+        const { user, body } = request
         const { orderedProducts } = body
-        const totalPrice = await calculateTotalPrice(orderedProducts)
+        const totalPrice = await paymentUtil.calculateTotalPrice(orderedProducts)
         const transactionRef = paymentUtil.genarateTransactionReference()
-        const qrResponse = await scbApi.createPaymentQr(scbToken.accessToken, {
+        const qrResponse = await scbApi.createPaymentQr({
             user: user,
             amount: totalPrice,
             transactionRef: transactionRef,
@@ -125,18 +85,15 @@ module.exports.getPaymentQrResult = async (request, response) => {
         if (!qrId) {
             throw {} // invalid params
         }
-
         const transaction = await transactionService.getTransactionByQrId(qrId)
         if (!transaction) {
             throw {}// transaction not found
         }
-
         if (transaction.transactionStatus === 'PAID') {
             response.status(StatusCodes.OK).send(transaction).end()
         } else {
             waitingQrStatusResponse[qrId] = response
         }
-
     } catch (err) {
         throw err
     }
@@ -153,7 +110,7 @@ module.exports.paymentConfirmation = async (req, res) => {
         const { billPaymentRef1 } = req.body
         const record = await transactionService.updateTransactionStatus(billPaymentRef1, 'PAID')
         const transaction = record.value
-        if (transaction.qrId) {
+        if (transaction && transaction.qrId) {
             const waitingResponse = waitingQrStatusResponse[transaction.qrId]
             if (waitingResponse) {
                 waitingResponse.status(StatusCodes.OK).send(transaction).end()

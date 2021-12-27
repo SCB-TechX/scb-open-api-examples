@@ -1,10 +1,33 @@
-const { v4: uuidv4 } = require('uuid');
-const axios = require('axios');
+const { v4: uuidv4 } = require('uuid')
+const axios = require('axios')
 const ApiResponseCodes = require('../constants/api-response-codes')
 
 const RESOURCE_OWNER_ID = 'test_from_balloon_shop_backend'
 
-module.exports.tokenV1 = async () => {
+let scbToken = {}
+const getScbToken = async () => {
+    if (!scbToken
+        || !scbToken.accessToken
+        || !scbToken.expireDate
+        || scbToken.expireDate < Date.now()) {
+
+        let tokenResponse = await tokenV1()
+        let tokenResponseData = tokenResponse.data
+        if (!tokenResponseData
+            || !tokenResponseData.accessToken
+            || !tokenResponseData.expiresAt) {
+            throw { responseCode: ApiResponseCodes.REQUEST_SCB_TOKEN_FAIL }
+        }
+        scbToken = {
+            ...tokenResponseData,
+            expireDate: new Date(tokenResponseData.expiresAt * 1000)
+        }
+        console.log('scbToken:', scbToken)
+    }
+    return scbToken
+}
+
+const tokenV1 = async () => {
     try {
         const uuid = uuidv4()
         const response = await axios.post(
@@ -27,10 +50,11 @@ module.exports.tokenV1 = async () => {
     }
 }
 
-module.exports.createPaymentDeeplink = async (accessToken, req) => {
+module.exports.createPaymentDeeplink = async (req) => {
     try {
-        console.log(req.user)
         const uuid = uuidv4()
+        const { accessToken } = await getScbToken()
+        console.log(accessToken)
         const response = await axios.post(
             process.env.SCB_API_ENDPOINT + '/v3/deeplink/transactions',
             {
@@ -61,16 +85,17 @@ module.exports.createPaymentDeeplink = async (accessToken, req) => {
                     'channel': 'scbeasy'
                 }
             })
-        return response.data;
+        return response.data
     } catch (err) {
-        console.log(err)
+        console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
     }
 }
 
-module.exports.createPaymentQr = async (accessToken, req) => {
+module.exports.createPaymentQr = async (req) => {
     try {
         const uuid = uuidv4()
+        const { accessToken } = await getScbToken()
         const response = await axios.post(
             process.env.SCB_API_ENDPOINT + '/v1/payment/qrcode/create',
             {
@@ -95,7 +120,7 @@ module.exports.createPaymentQr = async (accessToken, req) => {
                     'requestUId': uuid,
                 }
             })
-        return response.data;
+        return response.data
     } catch (err) {
         console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_QR_FAIL }
