@@ -125,6 +125,9 @@ POST /token
 ```http
 GET /products
 ```
+
+![get_products](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/get_products.puml)
+
 ##### Request 
 ###### Header
 | Key             | Value                              |
