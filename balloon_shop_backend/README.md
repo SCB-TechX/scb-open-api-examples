@@ -62,6 +62,8 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 }
 ```
 
+---
+
 ### API specification
 
 #### Create Login Token
@@ -95,7 +97,7 @@ POST /token
 | `500 `      | `50001`     | internal server error     |
 | `500 `      | `50002`     | fail to request scb token |
 
-
+---
 
 #### Get Products
 ```http
@@ -123,6 +125,8 @@ GET /products
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
 
+---
+
 #### Payment Confirmation Callback
 ```http
 POST /payment/confirmation
@@ -136,7 +140,6 @@ POST /payment/confirmation
 | Parameter         | Type     | Description                                                                      |
 | :---------------- | :------- | :------------------------------------------------------------------------------- |
 | `billPaymentRef1` | `string` | **Required**. For reference with `transactionRef` in the transactions collection |
-
 ##### Response 
 ###### Header
 | Key            | Value            |
@@ -150,12 +153,13 @@ POST /payment/confirmation
 | `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
 | `qrId`              | `string` | Transaction QR code identifier                          |
 | `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
-
 ###### Return Code
 | Status Code | Return Code | Description           |
 | :---------- | :---------- | :-------------------- |
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
+
+---
 
 #### Generate Payment Deeplink
 ```http
@@ -173,7 +177,6 @@ POST /payment/deeplink
 | `orderedProducts`           | `array`  | **Required**. List of ordered product for create a transaction |
 | `orderedProducts[n]._id`    | `string` | **Required**. Product identifier                               |
 | `orderedProducts[n].amount` | `string` | **Required**. Product amount for calculate total price         |
-
 ##### Response 
 ###### Header
 | Key            | Value            |
@@ -185,12 +188,13 @@ POST /payment/deeplink
 | `transactionId` | `string` | Transaction identifier                |
 | `deeplinkUrl`   | `string` | Deeplink to open SCB Easy Application |
 | `userRefId`     | `string` | User identifier                       |
-
 ###### Return Code
 | Status Code | Return Code | Description           |
 | :---------- | :---------- | :-------------------- |
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
+
+---
 
 #### Generate Payment QR Code
 ```http
@@ -208,7 +212,6 @@ POST /payment/qr
 | `orderedProducts`           | `array`  | **Required**. List of ordered product for create a transaction |
 | `orderedProducts[n]._id`    | `string` | **Required**. Product identifier                               |
 | `orderedProducts[n].amount` | `string` | **Required**. Product amount for calculate total price         |
-
 ##### Response 
 ###### Header
 | Key            | Value            |
@@ -219,12 +222,13 @@ POST /payment/qr
 | :--------- | :------- | :--------------------------------------------------------------- |
 | `qrImage`  | `string` | QR code image for scan with banking application in base64 encode |
 | `qrcodeId` | `string` | Transaction QR code identifier                                   |
-
 ###### Return Code
 | Status Code | Return Code | Description           |
 | :---------- | :---------- | :-------------------- |
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
+
+---
 
 #### Get Payment QR Code Status
 ```http
@@ -239,6 +243,24 @@ GET /payment/qr/status
 | Parameter | Type     | Description                                  |
 | :-------- | :------- | :------------------------------------------- |
 | `qrId`    | `string` | **Required**. Transaction QR code identifier |
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter           | Type     | Description                                             |
+| :------------------ | :------- | :------------------------------------------------------ |
+| `_id`               | `string` | Transaction identifier                                  |
+| `transactionStatus` | `string` | Transaction status                                      |
+| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
+| `qrId`              | `string` | Transaction QR code identifier                          |
+| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
 
 ---
 
