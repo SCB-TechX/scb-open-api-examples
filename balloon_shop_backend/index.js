@@ -18,5 +18,5 @@ const http = require('http')
 const server = http.createServer(app)
 
 server.listen(process.env.PORT, () => {
-    console.log('application started')
+    console.log('Application started')
 })
