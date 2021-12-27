@@ -93,6 +93,9 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 ```http
 POST /token
 ```
+
+![create_login_token](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/create_login_token.puml
+
 ##### Request 
 ###### Header
 | Key            | Value                          |
@@ -155,6 +158,9 @@ GET /products
 ```http
 POST /payment/confirmation
 ```
+
+![create_login_token](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/payment_confirmation.puml
+
 ##### Request 
 ###### Header
 | Key            | Value                          |
