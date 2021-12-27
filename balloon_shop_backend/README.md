@@ -8,7 +8,7 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 To make it easy for you to get started, here's a list of recommended setup steps.
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
-3. Setup environment variables (`.env` file)
+3. Set environment variables.
 
 | Key                        | Description                                                                                  |
 | :------------------------- | :------------------------------------------------------------------------------------------- |
@@ -23,7 +23,7 @@ To make it easy for you to get started, here's a list of recommended setup steps
 | `SCB_MERCHANT_TERMINAL_ID` | Terminal ID from "Apps > Merchant Profile > Merchant Information (Credit Card)"              |
 | `DB_CONNECTION_URI`        | MongoDB connection URI                                                                       |
 
-Here's sample file content
+Sample file content (`.env` file)
 ```
 PORT=3000
 SERVER_JWT_SECRET=MySecret
