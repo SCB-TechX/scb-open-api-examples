@@ -9,6 +9,7 @@ To make it easy for you to get started, here's a list of recommended setup steps
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
 3. Setup environment variables (`.env` file)
+
 | Key                        | Description                                                                                |
 | :------------------------- | :----------------------------------------------------------------------------------------- |
 | `PORT`                     | Server port                                                                                |
@@ -21,6 +22,7 @@ To make it easy for you to get started, here's a list of recommended setup steps
 | `SCB_MERCHANT_ID`          |                                                                                            |
 | `SCB_MERCHANT_TERMINAL_ID` |                                                                                            |
 | `DB_CONNECTION_URI`        |                                                                                            |
+
 ```
 PORT=
 SERVER_JWT_SECRET= config your own
