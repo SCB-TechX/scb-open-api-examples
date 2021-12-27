@@ -143,13 +143,13 @@ POST /payment/confirmation
 | :------------- | :--------------- |
 | `Content-Type` | application/json |
 ###### Body
-| Parameter           | Type     | Description                                           |
-| :------------------ | :------- | :---------------------------------------------------- |
-| `_id`               | `string` | Transaction identifier                                |
-| `transactionStatus` | `string` | Transaction status                                    |
-| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1` |
-| `qrId`              | `string` | QR code identifier for transaction                    |
-| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `easy`   |
+| Parameter           | Type     | Description                                             |
+| :------------------ | :------- | :------------------------------------------------------ |
+| `_id`               | `string` | Transaction identifier                                  |
+| `transactionStatus` | `string` | Transaction status                                      |
+| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
+| `qrId`              | `string` | QR code identifier for transaction                      |
+| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
 
 ###### Return Code
 | Status Code | Return Code | Description           |
@@ -161,6 +161,36 @@ POST /payment/confirmation
 ```http
 POST /payment/deeplink
 ```
+##### Request 
+###### Header
+| Key             | Value                              |
+| :-------------- | :--------------------------------- |
+| `Content-Type`  | **Required**. application/json     |
+| `Authorization` | **Required**. Bearer `accessToken` |
+###### Body
+| Parameter                   | Type     | Description                                                    |
+| :-------------------------- | :------- | :------------------------------------------------------------- |
+| `orderedProducts`           | `array`  | **Required**. List of ordered product for create a transaction |
+| `orderedProducts[n]._id`    | `string` | **Required**. Product identifier                               |
+| `orderedProducts[n].amount` | `string` | **Required**. Product amount for calculate total price         |
+
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter       | Type     | Description                           |
+| :-------------- | :------- | :------------------------------------ |
+| `transactionId` | `string` | Transaction identifier                |
+| `deeplinkUrl`   | `string` | Deeplink to open SCB Easy Application |
+| `userRefId`     | `string` | User identifier                       |
+
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
 
 #### Generate Payment QR Code
 ```http
