@@ -148,7 +148,7 @@ POST /payment/confirmation
 | `_id`               | `string` | Transaction identifier                                  |
 | `transactionStatus` | `string` | Transaction status                                      |
 | `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1`   |
-| `qrId`              | `string` | QR code identifier for transaction                      |
+| `qrId`              | `string` | Transaction QR code identifier                          |
 | `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `deeplink` |
 
 ###### Return Code
@@ -196,11 +196,49 @@ POST /payment/deeplink
 ```http
 POST /payment/qr
 ```
+##### Request 
+###### Header
+| Key             | Value                              |
+| :-------------- | :--------------------------------- |
+| `Content-Type`  | **Required**. application/json     |
+| `Authorization` | **Required**. Bearer `accessToken` |
+###### Body
+| Parameter                   | Type     | Description                                                    |
+| :-------------------------- | :------- | :------------------------------------------------------------- |
+| `orderedProducts`           | `array`  | **Required**. List of ordered product for create a transaction |
+| `orderedProducts[n]._id`    | `string` | **Required**. Product identifier                               |
+| `orderedProducts[n].amount` | `string` | **Required**. Product amount for calculate total price         |
+
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter  | Type     | Description                                                      |
+| :--------- | :------- | :--------------------------------------------------------------- |
+| `qrImage`  | `string` | QR code image for scan with banking application in base64 encode |
+| `qrcodeId` | `string` | Transaction QR code identifier                                   |
+
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
 
 #### Get Payment QR Code Status
 ```http
 GET /payment/qr/status
 ```
+##### Request 
+###### Header
+| Key             | Value                              |
+| :-------------- | :--------------------------------- |
+| `Authorization` | **Required**. Bearer `accessToken` |
+###### Query
+| Parameter | Type     | Description                                  |
+| :-------- | :------- | :------------------------------------------- |
+| `qrId`    | `string` | **Required**. Transaction QR code identifier |
 
 ---
 
