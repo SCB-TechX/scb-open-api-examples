@@ -194,6 +194,9 @@ POST /payment/confirmation
 ```http
 POST /payment/deeplink
 ```
+
+![create_login_token](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/generate_payment_deeplink.puml)
+
 ##### Request 
 ###### Header
 | Key             | Value                              |
@@ -228,6 +231,9 @@ POST /payment/deeplink
 ```http
 POST /payment/qr
 ```
+
+![create_login_token](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/generate_payment_qr_code.puml)
+
 ##### Request 
 ###### Header
 | Key             | Value                              |
