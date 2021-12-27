@@ -9,6 +9,18 @@ To make it easy for you to get started, here's a list of recommended setup steps
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
 3. Setup environment variables (`.env` file)
+| Key                        | Description                                                                                |
+| :------------------------- | :----------------------------------------------------------------------------------------- |
+| `PORT`                     | Server port                                                                                |
+| `SERVER_JWT_SECRET`        | Secret for sign JWT token                                                                  |
+| `SCB_API_KEY`              | API key from SCB developer account                                                         |
+| `SCB_API_SECRET`           | API secret from SCB developer account                                                      |
+| `SCB_API_ENDPOINT`         | SCB API endpoint for sandbox you can use https://api-sandbox.partners.scb/partners/sandbox |
+| `SCB_BILLER_ID`            |                                                                                            |
+| `SCB_BILLER_REF3_PREFIX`   |                                                                                            |
+| `SCB_MERCHANT_ID`          |                                                                                            |
+| `SCB_MERCHANT_TERMINAL_ID` |                                                                                            |
+| `DB_CONNECTION_URI`        |                                                                                            |
 ```
 PORT=
 SERVER_JWT_SECRET= config your own
@@ -21,8 +33,8 @@ SCB_MERCHANT_ID= from SCB developer
 SCB_MERCHANT_TERMINAL_ID= from SCB developer
 DB_CONNECTION_URI= MongoDB connection URI
 ```
-4. Install dependency `npm install`
-5. Start development server `npm start`
+1. Install dependency `npm install`
+2. Start development server `npm start`
 
 ---
 
