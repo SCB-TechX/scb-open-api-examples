@@ -24,10 +24,8 @@ module.exports.calculateTotalPrice = async (orderedProducts) => {
         if (product) {
             totalPrice = totalPrice + (product.price * orderedProduct.amount)
         } else {
-            console.log('product', product)
             throw {}
         }
     })
-    console.log('totalPrice', totalPrice)
     return totalPrice
 }

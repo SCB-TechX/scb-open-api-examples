@@ -22,7 +22,6 @@ const getScbToken = async () => {
             ...tokenResponseData,
             expireDate: new Date(tokenResponseData.expiresAt * 1000)
         }
-        console.log('scbToken:', scbToken)
     }
     return scbToken
 }
@@ -54,7 +53,6 @@ module.exports.createPaymentDeeplink = async (req) => {
     try {
         const uuid = uuidv4()
         const { accessToken } = await getScbToken()
-        console.log(accessToken)
         const response = await axios.post(
             process.env.SCB_API_ENDPOINT + '/v3/deeplink/transactions',
             {
@@ -87,7 +85,6 @@ module.exports.createPaymentDeeplink = async (req) => {
             })
         return response.data
     } catch (err) {
-        console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_DEEPLINK_FAIL }
     }
 }
@@ -122,7 +119,6 @@ module.exports.createPaymentQr = async (req) => {
             })
         return response.data
     } catch (err) {
-        console.log(err.response.data)
         throw { responseCode: ApiResponseCodes.REQUEST_SCB_CREATE_QR_FAIL }
     }
 }

@@ -108,7 +108,6 @@ module.exports.getPaymentQrResult = async (request, response) => {
  */
 module.exports.paymentConfirmation = async (req, res) => {
     try {
-        console.log('paymentConfirmation', 'BODY:', req.body)
         const { billPaymentRef1 } = req.body
         const record = await transactionService.updateTransactionStatus(billPaymentRef1, 'PAID')
         const transaction = record.value

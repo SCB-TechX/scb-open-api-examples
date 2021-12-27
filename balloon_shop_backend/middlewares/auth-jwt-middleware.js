@@ -23,7 +23,6 @@ const getUserByEmail = (email) => {
 }
 
 const jwtStrategy = new JwtStrategy(opts, (payload, done) => {
-    console.log(payload.sub)
     const user = getUserByEmail(payload.sub)
     if (isTokenExpire(payload) || !user) {
         throw done('token validation failed')

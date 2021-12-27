@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 
-let instance;
+let instance
 const client = new MongoClient(process.env.DB_CONNECTION_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -8,7 +8,7 @@ const client = new MongoClient(process.env.DB_CONNECTION_URI, {
 const connectToDatabase = async () => {
     const connection = await client.connect()
     instance = connection.db()
-    console.log('connected to database')
+    console.log('Connected to the database')
 }
 
 module.exports = {
