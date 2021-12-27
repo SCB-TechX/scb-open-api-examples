@@ -263,11 +263,13 @@ POST /payment/qr
 | `500 `      | `50001`     | internal server error |
 
 
-
 #### Get Payment QR Code Status
 ```http
 GET /payment/qr/status
 ```
+
+![create_login_token](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/SCB-TechX/scb-open-api-examples/master/docs/sequence/get_payment_qr_code_status.puml)
+
 ##### Request 
 ###### Header
 | Key             | Value                              |

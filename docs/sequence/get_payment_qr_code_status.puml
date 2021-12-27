@@ -1,0 +1,17 @@
+@startuml get_payment_qr_code_status
+hide footbox
+participant "Balloon Shop App" as app
+participant "Balloon Shop Backend" as backend
+database "MongoDB" as db
+
+app -> backend: GET /payment/qr/status
+backend -> backend: Validate JWT
+backend -> db: Find transaction by qrId = request.qrId
+db -> backend: 
+alt If status == 'PAID'
+    backend -> app: Response
+else 
+    backend -> backend: Save waiting response
+end
+
+@enduml
