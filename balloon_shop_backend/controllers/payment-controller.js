@@ -6,6 +6,7 @@ const scbApi = require('../apis/scb-api')
 let waitingQrStatusResponse = {}
 
 /**
+ * Create SCB Easy App deeplink from SCB Open API
  * 
  * @param {Express.Request} request
  * @param {Express.Response} response
@@ -100,6 +101,7 @@ module.exports.getPaymentQrResult = async (request, response) => {
 }
 
 /**
+ * Callback from SCB server after payment
  * 
  * @param {Express.Request} request
  * @param {Express.Response} response
