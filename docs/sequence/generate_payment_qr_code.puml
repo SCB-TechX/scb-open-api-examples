@@ -1,0 +1,23 @@
+@startuml generate_payment_qr_code
+hide footbox
+participant "Balloon Shop App" as app
+participant "Balloon Shop Backend" as backend
+database "MongoDB" as db
+participant "SCB" as scb
+
+app -> backend: POST /payment/qr
+backend -> backend: Validate JWT
+backend -> db: Find all products
+db -> backend:
+backend -> backend: Calculate total price
+alt If SCB accessToken is expired OR not ready
+backend -> scb: POST /v1/oauth/token
+scb -> backend: Response SCB accessToken
+backend -> backend: Save SCB accessToken
+end
+backend -> scb: POST /v1/payment/qrcode/create
+scb -> backend: Response QR code
+backend -> db: Save transaction
+backend -> app: Response
+
+@enduml

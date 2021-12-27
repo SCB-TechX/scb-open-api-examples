@@ -1,9 +1,9 @@
 @startuml payment_confirmation
 hide footbox
-participant "SCB" as scb
 participant "Balloon Shop App" as app
 participant "Balloon Shop Backend" as backend
 database "MongoDB" as db
+participant "SCB" as scb
 
 scb -> backend: POST /payment/confirmation
 backend -> db: Find and Update transactions\nby transactionRef == billPaymentRef1\ntransactionStatus = 'PAID'
