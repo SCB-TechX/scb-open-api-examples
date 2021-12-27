@@ -1,6 +1,5 @@
-# balloon_shop_app
-
-A sample Flutter project connected with SCB Open API
+# Balloon Shop Backend
+A sample Flutter project connected to Balloon Shop Backend
 
 ## Getting Started
 
