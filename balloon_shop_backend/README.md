@@ -4,7 +4,7 @@ Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API ser
 
 ---
 
-## 1. Getting started
+## Getting started
 To make it easy for you to get started, here's a list of recommended setup steps.
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
 2. Setup your MongoDB server.
