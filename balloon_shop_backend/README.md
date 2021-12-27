@@ -286,6 +286,6 @@ Before integrate with the frontend application and the SCB server (webhooks for 
 ---
 
 ## Contributing
-[] Unit tests
-[] Structuring projects
-[] Login security
+- [ ] Unit tests
+- [ ] Structuring projects
+- [ ] Login security
