@@ -10,18 +10,18 @@ To make it easy for you to get started, here's a list of recommended setup steps
 2. Setup your MongoDB server.
 3. Setup environment variables (`.env` file)
 
-| Key                        | Description                                                                                |
-| :------------------------- | :----------------------------------------------------------------------------------------- |
-| `PORT`                     | Server port                                                                                |
-| `SERVER_JWT_SECRET`        | Secret for sign JWT token                                                                  |
-| `SCB_API_KEY`              | API key from SCB developer account                                                         |
-| `SCB_API_SECRET`           | API secret from SCB developer account                                                      |
-| `SCB_API_ENDPOINT`         | SCB API endpoint for sandbox you can use https://api-sandbox.partners.scb/partners/sandbox |
-| `SCB_BILLER_ID`            |                                                                                            |
-| `SCB_BILLER_REF3_PREFIX`   |                                                                                            |
-| `SCB_MERCHANT_ID`          |                                                                                            |
-| `SCB_MERCHANT_TERMINAL_ID` |                                                                                            |
-| `DB_CONNECTION_URI`        |                                                                                            |
+| Key                        | Description                                                                                  |
+| :------------------------- | :------------------------------------------------------------------------------------------- |
+| `PORT`                     | Server port                                                                                  |
+| `SERVER_JWT_SECRET`        | Secret for sign JWT token                                                                    |
+| `SCB_API_KEY`              | API key from SCB developer account                                                           |
+| `SCB_API_SECRET`           | API secret from SCB developer account                                                        |
+| `SCB_API_ENDPOINT`         | SCB API endpoint (for sandbox you can use https://api-sandbox.partners.scb/partners/sandbox) |
+| `SCB_BILLER_ID`            | Biller ID from "Apps > Merchant Profile > Biller Information"                                |
+| `SCB_BILLER_REF3_PREFIX`   | Reference 3 Prefix from "Apps > Merchant Profile > Biller Information"                       |
+| `SCB_MERCHANT_ID`          | Merchant ID from "Apps > Merchant Profile > Merchant Information (Direct Debit)"             |
+| `SCB_MERCHANT_TERMINAL_ID` | Terminal ID from "Apps > Merchant Profile > Merchant Information (Credit Card)"              |
+| `DB_CONNECTION_URI`        | MongoDB connection URI                                                                       |
 
 ```
 PORT=
@@ -286,6 +286,6 @@ Before integrate with the frontend application and the SCB server (webhooks for 
 ---
 
 ## Contributing
-- Unit tests
-- Structuring projects
-- Login security
+[] Unit tests
+[] Structuring projects
+[] Login security
