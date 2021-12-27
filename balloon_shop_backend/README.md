@@ -3,7 +3,6 @@ This is an example project of partner backend service connected to [SCB Open API
 Using [NodeJs](https://nodejs.org/) with some widely used libraries, the API server with [ExpressJs](https://expressjs.com/), JWT authentication with [PassportJs](https://www.passportjs.org/). And [MongoDB](https://www.mongodb.com/) as the database layer.
 
 ---
-
 ## Getting started
 To make it easy for you to get started, here's a list of recommended setup steps.
 1. Sign up SCB Open API developer account [here](https://developer.scb/).
@@ -46,7 +45,12 @@ npm start
 ```
 
 ---
+## Deployment 
+Before integrate with the frontend application and the SCB server (webhooks for payment confirmation callback) you have to run the service with public HTTPS endpoint, here're some easy ways to do it.
+- [ngrok](https://ngrok.com/) - Exposing your local server to a public URL. 
+- [Heroku](https://heroku.com/) -  Cloud platform service.
 
+---
 ## Documentation
 We provide service information such as API specification and the data collections detail to make you learn the service faster.
 
@@ -83,8 +87,6 @@ As mention above this project use [MongoDB](https://www.mongodb.com/). Here's th
 }
 ```
 
----
-
 ### API specification
 
 #### Create Login Token
@@ -118,7 +120,6 @@ POST /token
 | `500 `      | `50001`     | internal server error     |
 | `500 `      | `50002`     | fail to request scb token |
 
----
 
 #### Get Products
 ```http
@@ -146,7 +147,6 @@ GET /products
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
 
----
 
 #### Payment Confirmation Callback
 ```http
@@ -180,7 +180,6 @@ POST /payment/confirmation
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
 
----
 
 #### Generate Payment Deeplink
 ```http
@@ -215,7 +214,6 @@ POST /payment/deeplink
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
 
----
 
 #### Generate Payment QR Code
 ```http
@@ -249,7 +247,7 @@ POST /payment/qr
 | `401`       | `40102`     | invalid token         |
 | `500 `      | `50001`     | internal server error |
 
----
+
 
 #### Get Payment QR Code Status
 ```http
@@ -284,14 +282,6 @@ GET /payment/qr/status
 | `500 `      | `50001`     | internal server error |
 
 ---
-
-## Deployment 
-Before integrate with the frontend application and the SCB server (webhooks for payment confirmation callback) you have to run the service with public HTTPS endpoint, here're some easy ways to do it.
-- [ngrok](https://ngrok.com/) - Exposing your local server to a public URL. 
-- [Heroku](https://heroku.com/) -  Cloud platform service.
-
----
-
 ## Contributing
 - [ ] Unit tests
 - [ ] Code cleaning
