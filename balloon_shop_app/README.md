@@ -1,5 +1,5 @@
 # Balloon Shop Backend
-A sample Flutter project connected to Balloon Shop Backend
+A sample Flutter project connected to [Balloon Shop Backend](https://github.com/SCB-TechX/scb-open-api-examples/tree/master/balloon_shop_backend).
 
 ## Getting Started
 
