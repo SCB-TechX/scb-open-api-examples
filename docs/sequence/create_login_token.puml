@@ -1,0 +1,14 @@
+@startuml create_login_token
+hide footbox
+participant "Balloon Shop App" as app
+participant "Balloon Shop Backend" as backend
+database "MongoDB" as db
+
+app -> backend: POST /token
+backend -> db: Find users by email
+db -> backend: 
+backend -> backend: Validate email and password
+backend -> backend: Generate JWT token
+backend -> app: Response
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml payment_confirmation
+hide footbox
+participant "SCB" as scb
+participant "Balloon Shop App" as app
+participant "Balloon Shop Backend" as backend
+database "MongoDB" as db
+
+scb -> backend: POST /payment/confirmation
+backend -> db: Find and Update transactions\nby transactionRef == billPaymentRef1\ntransactionStatus = 'PAID'
+db -> backend: 
+alt Have waiting QR status response
+backend -> app: Response QR code status
+end
+backend -> scb: Response
+
+@enduml

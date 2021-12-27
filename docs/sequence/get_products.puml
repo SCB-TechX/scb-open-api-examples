@@ -1,4 +1,4 @@
-@startuml
+@startuml get_products
 hide footbox
 participant "Balloon Shop App" as app
 participant "Balloon Shop Backend" as backend
