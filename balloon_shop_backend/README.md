@@ -294,5 +294,5 @@ Before integrate with the frontend application and the SCB server (webhooks for 
 
 ## Contributing
 - [ ] Unit tests
-- [ ] Structuring projects
+- [ ] Code cleaning
 - [ ] Login security
