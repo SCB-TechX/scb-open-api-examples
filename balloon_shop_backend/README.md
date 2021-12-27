@@ -23,20 +23,27 @@ To make it easy for you to get started, here's a list of recommended setup steps
 | `SCB_MERCHANT_TERMINAL_ID` | Terminal ID from "Apps > Merchant Profile > Merchant Information (Credit Card)"              |
 | `DB_CONNECTION_URI`        | MongoDB connection URI                                                                       |
 
+Here's sample file content
 ```
-PORT=
-SERVER_JWT_SECRET= config your own
-SCB_API_KEY= from SCB developer
-SCB_API_SECRET= from SCB developer
+PORT=3000
+SERVER_JWT_SECRET=MySecret
+SCB_API_KEY=l7eb0fcb0350e84xxxxxxxxxxxxx
+SCB_API_SECRET=45a90fee5d9443xxxxxxxxxxxxx
 SCB_API_ENDPOINT=https://api-sandbox.partners.scb/partners/sandbox
-SCB_BILLER_ID= from SCB developer
-SCB_BILLER_REF3_PREFIX= from SCB developer
-SCB_MERCHANT_ID= from SCB developer
-SCB_MERCHANT_TERMINAL_ID= from SCB developer
-DB_CONNECTION_URI= MongoDB connection URI
+SCB_BILLER_ID=675010384785812
+SCB_BILLER_REF3_PREFIX=HZZ
+SCB_MERCHANT_ID=010615746499630
+SCB_MERCHANT_TERMINAL_ID=947724928198089
+DB_CONNECTION_URI=mongodb+srv://user:pass@cluster0.w1eti.mongodb.net/balloon-shop?retryWrites=true&w=majority
 ```
-1. Install dependency `npm install`
-2. Start development server `npm start`
+4. Install dependency
+```bash
+npm install
+```
+5. Start development server
+```bash
+npm start
+```
 
 ---
 
