@@ -272,7 +272,6 @@ Before integrate with the frontend application and the SCB server (webhooks for 
 ---
 
 ## Contributing
-- API Documents
 - Unit tests
 - Structuring projects
 - Login security
