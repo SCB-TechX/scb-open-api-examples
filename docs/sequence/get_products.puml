@@ -1,0 +1,13 @@
+@startuml
+hide footbox
+participant "Balloon Shop App" as app
+participant "Balloon Shop Backend" as backend
+database "MongoDB" as db
+
+app -> backend: GET /products
+backend -> backend: Validate accessToken
+backend -> db: Find all product
+db -> backend: 
+backend -> app: Response
+
+@enduml
