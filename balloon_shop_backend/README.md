@@ -88,7 +88,7 @@ POST /token
 | Parameter     | Type     | Description                     |
 | :------------ | :------- | :------------------------------ |
 | `accessToken` | `string` | JWT Token for access secure API |
-###### Error
+###### Return Code
 | Status Code | Return Code | Description               |
 | :---------- | :---------- | :------------------------ |
 | `401`       | `40101`     | invalid email or password |
@@ -114,14 +114,48 @@ GET /products
 | :------------- | :--------------- |
 | `Content-Type` | application/json |
 ###### Body
-| Parameter     | Type     | Description                     |
-| :------------ | :------- | :------------------------------ |
-| `accessToken` | `string` | JWT Token for access secure API |
+| Parameter  | Type    | Description                              |
+| :--------- | :------ | :--------------------------------------- |
+| `products` | `Array` | List of items in the products collection |
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
 
 #### Payment Confirmation Callback
 ```http
 POST /payment/confirmation
 ```
+##### Request 
+###### Header
+| Key            | Value                          |
+| :------------- | :----------------------------- |
+| `Content-Type` | **Required**. application/json |
+###### Body
+| Parameter         | Type     | Description                                                                      |
+| :---------------- | :------- | :------------------------------------------------------------------------------- |
+| `billPaymentRef1` | `string` | **Required**. For reference with `transactionRef` in the transactions collection |
+
+##### Response 
+###### Header
+| Key            | Value            |
+| :------------- | :--------------- |
+| `Content-Type` | application/json |
+###### Body
+| Parameter           | Type     | Description                                           |
+| :------------------ | :------- | :---------------------------------------------------- |
+| `_id`               | `string` | Transaction identifier                                |
+| `transactionStatus` | `string` | Transaction status                                    |
+| `transactionRef`    | `string` | Transaction reference matching with `billPaymentRef1` |
+| `qrId`              | `string` | QR code identifier for transaction                    |
+| `paymentMethod`     | `string` | Transaction payment use case. Can be `qr` or `easy`   |
+
+###### Return Code
+| Status Code | Return Code | Description           |
+| :---------- | :---------- | :-------------------- |
+| `401`       | `40102`     | invalid token         |
+| `500 `      | `50001`     | internal server error |
 
 #### Generate Payment Deeplink
 ```http
