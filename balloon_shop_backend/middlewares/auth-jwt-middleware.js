@@ -1,7 +1,7 @@
 const passport = require('passport')
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const JwtStrategy = require("passport-jwt").Strategy
-const userService = require('../services/users.service')
+const userService = require('../services/users-service')
 const ApiResponseCodes = require('../constants/api-response-codes')
 
 const opts = {
