@@ -1,7 +1,30 @@
 const paymentUtil = require('../payment-utility')
 
-test('adds 1 + 2 to equal 3', () => {
-    expect(paymentUtil.genarateTransactionReference())
-        .toHaveLength(10)
-        .toMatch('[A-Z,0-9]+')
+jest.mock('mongodb')
+
+describe('Generate Transaction Reference', () => {
+
+    let lastResult = ""
+
+    test('Generate Transaction Reference #1', () => {
+        let result = paymentUtil.genarateTransactionReference()
+        expect(result).toMatch(/^[A-Z,0-9]{10}$/g)
+        expect(result).not.toEqual(lastResult)
+        lastResult = result
+    })
+
+    test('Generate Transaction Reference #2', () => {
+        let result = paymentUtil.genarateTransactionReference()
+        expect(result).toMatch(/^[A-Z,0-9]{10}$/g)
+        expect(result).not.toEqual(lastResult)
+        lastResult = result
+    })
+
+    test('Generate Transaction Reference #3', () => {
+        let result = paymentUtil.genarateTransactionReference()
+        expect(result).toMatch(/^[A-Z,0-9]{10}$/g)
+        expect(result).not.toEqual(lastResult)
+        lastResult = result
+    })
+
 })
